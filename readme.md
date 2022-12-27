@@ -5,27 +5,22 @@
 ### 依赖
 
 ```
-    //
-    implementation 'com.github.MJLblabla.hapiDroidAVBOX:baseAVUitl:v1.0'
-    
-    //采集
-	implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiAVCapture:v1.0'
-	
-	//编码
-	implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiAVPackerClinet:v1.0'
-	implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiAVEncoder:v1.0'
-	implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiAVEncoder-ext-ffmpeg:v1.0'
-
-    //输出
-    implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiIMuxer:v1.0'
-    
-    //录制
-    implementation 'com.github.MJLblabla.hapiDroidAVBOX:droidLocalMediaMuxer:v1.0'
-    //rtmp推流
-    implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiRTMPLiveStreamer:v1.0'
-    //srt推流
-    implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiSRTLiveSTreamer:v1.0'
-    
+//
+implementation 'com.github.MJLblabla.hapiDroidAVBOX:baseAVUitl:v1.0'
+//采集
+implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiAVCapture:v1.0'
+//编码
+implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiAVPackerClinet:v1.0'
+implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiAVEncoder:v1.0'
+implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiAVEncoder-ext-ffmpeg:v1.0'
+//输出
+implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiIMuxer:v1.0'
+//录制
+implementation 'com.github.MJLblabla.hapiDroidAVBOX:droidLocalMediaMuxer:v1.0'
+//rtmp推流
+implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiRTMPLiveStreamer:v1.0'
+//srt推流
+implementation 'com.github.MJLblabla.hapiDroidAVBOX:hapiSRTLiveSTreamer:v1.0' 
 ```
 
 ### 创建媒体轨道
