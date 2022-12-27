@@ -83,12 +83,7 @@ class CameraActivity : AppCompatActivity() {
 
     //摄像头轨道
     private val cameraTrack by lazy {
-        HapiTrackFactory.createCameraXTrack(this, 480, 640, 30).apply {
-            frameCall = object : FrameCall<VideoFrame> {
-                //帧回调
-                override fun onFrame(frame: VideoFrame) {}
-            }
-        }
+        HapiTrackFactory.createCameraXTrack(this, 480, 640, 30)
     }
 
     //麦克轨道
