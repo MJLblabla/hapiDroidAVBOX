@@ -169,15 +169,12 @@ class CameraActivity : AppCompatActivity() {
                     recordUrl = if (Build.VERSION.SDK_INT > 29) {
                         cacheDir.absolutePath
                     } else {
-                        Environment.getExternalStorageDirectory().getAbsolutePath()
-                            .toString()
+                        Environment.getExternalStorageDirectory().absolutePath.toString()
                     } + "/${System.currentTimeMillis()}.mp4"
-
                     val file = File(recordUrl)
                     if (!file.exists()) {
                         file.createNewFile()
                     }
-
                     //开始录制
                     recordClient.start(recordUrl)
                 }

@@ -8,6 +8,7 @@ import com.hapi.avparam.AVLog
 import com.hapi.avparam.KEY_AUDIO_FORMAT
 import com.hapi.ioutput.ConnectedStatus
 import com.hapi.ioutput.OutputStreamer
+import com.hapi.ioutput.getFileType
 import java.nio.ByteBuffer
 
 class HapiMediaMuxer : OutputStreamer() {
@@ -26,7 +27,7 @@ class HapiMediaMuxer : OutputStreamer() {
             mMuxer?.start()
         }
 
-      //  Log.d("HapiMediaMuxer"," writeData"+track+ "   "+bufferInfo.size+"  "+bufferInfo.flags+"  pts "+bufferInfo.presentationTimeUs)
+        //  Log.d("HapiMediaMuxer"," writeData"+track+ "   "+bufferInfo.size+"  "+bufferInfo.flags+"  pts "+bufferInfo.presentationTimeUs)
         if (bufferInfo.flags and MediaCodec.BUFFER_FLAG_CODEC_CONFIG != 0) {
             bufferInfo.size = 0
         } else if (bufferInfo.size != 0) {
@@ -44,7 +45,15 @@ class HapiMediaMuxer : OutputStreamer() {
         isStart = true
         isTrackOk = false
         changeConnectedStatus(ConnectedStatus.CONNECTED_STATUS_START)
-        mMuxer = MediaMuxer(url, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4)
+        val type = when (url.getFileType()) {
+            "mp4" -> MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4
+            "webm" -> MediaMuxer.OutputFormat.MUXER_OUTPUT_WEBM
+            "3gp" -> MediaMuxer.OutputFormat.MUXER_OUTPUT_3GPP
+            "heif" -> MediaMuxer.OutputFormat.MUXER_OUTPUT_HEIF
+            "ogg" -> MediaMuxer.OutputFormat.MUXER_OUTPUT_OGG
+            else -> MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4
+        }
+        mMuxer = MediaMuxer(url, type)
         changeConnectedStatus(ConnectedStatus.CONNECTED_STATUS_CONNECTED)
     }
 
