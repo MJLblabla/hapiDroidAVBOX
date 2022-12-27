@@ -1,0 +1,14 @@
+# ninja log v5
+2	893	1670746471	CMakeFiles/avencoder.dir/encoder/SoftAudioEncoder.cpp.o	2d27daf44ee3410
+0	39	1670748114	build.ninja	7c297ee7176256ae
+1	940	1670746471	CMakeFiles/avencoder.dir/encoder/IEncoder.cpp.o	8b5925fd2dc0f2aa
+3	891	1670746471	CMakeFiles/avencoder.dir/jinencoder.cpp.o	97b32c358eb8417c
+2	891	1670746471	CMakeFiles/avencoder.dir/encoder/SoftVideoEncoder.cpp.o	57c1bae085553087
+3	973	1670746471	CMakeFiles/avencoder.dir/jni/SoftEncoderContext.cpp.o	754c21a8235d67f6
+1	129	1672120233	CMakeFiles/avencoder.dir/resample/AVResample.cpp.o	2a6c9fdfd4ac3a31
+1	254	1672120233	CMakeFiles/avencoder.dir/jinresample.cpp.o	c3ac6256075f2192
+255	321	1672120233	/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/build/intermediates/cxx/Debug/6y2r6m65/obj/arm64-v8a/libavencoder.so	c027865cadea020b
+0	10	0	clean	5430a8c815a28d05
+2	204	1672120271	CMakeFiles/avencoder.dir/resample/AVResample.cpp.o	2a6c9fdfd4ac3a31
+2	373	1672120272	CMakeFiles/avencoder.dir/jinresample.cpp.o	c3ac6256075f2192
+373	498	1672120272	/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/build/intermediates/cxx/Debug/6y2r6m65/obj/arm64-v8a/libavencoder.so	c027865cadea020b

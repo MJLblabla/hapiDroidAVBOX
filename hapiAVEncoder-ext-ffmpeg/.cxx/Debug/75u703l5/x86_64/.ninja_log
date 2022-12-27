@@ -1,0 +1,46 @@
+# ninja log v5
+2	332	1671369306	CMakeFiles/avencoderffmpeg.dir/jinencoder.cpp.o	d2dc86f083f76f95
+3	304	1671369306	CMakeFiles/avencoderffmpeg.dir/encoder/SoftVideoEncoder.cpp.o	73979ce70d06bcc1
+436	531	1671369306	/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/build/intermediates/cxx/Debug/75u703l5/obj/x86_64/libavencoderffmpeg.so	8a3d141ae74d6452
+2	399	1671369306	CMakeFiles/avencoderffmpeg.dir/encoder/IEncoder.cpp.o	cb7c244fb8786de3
+2	293	1671369306	CMakeFiles/avencoderffmpeg.dir/encoder/SoftAudioEncoder.cpp.o	9deb8dddb9473e41
+3	436	1671369306	CMakeFiles/avencoderffmpeg.dir/jni/SoftEncoderContext.cpp.o	cb17094b144d9f0b
+0	10	0	clean	5430a8c815a28d05
+0	9	0	clean	5430a8c815a28d05
+0	9	0	clean	5430a8c815a28d05
+0	18	0	clean	5430a8c815a28d05
+0	9	0	clean	5430a8c815a28d05
+<<<<<<< HEAD
+0	10	0	clean	5430a8c815a28d05
+0	19	0	clean	5430a8c815a28d05
+0	10	0	clean	5430a8c815a28d05
+0	27	0	clean	5430a8c815a28d05
+=======
+0	8	0	clean	5430a8c815a28d05
+0	9	0	clean	5430a8c815a28d05
+0	9	0	clean	5430a8c815a28d05
+0	10	0	clean	5430a8c815a28d05
+0	10	0	clean	5430a8c815a28d05
+>>>>>>> 7a1f410ec072077e11ed13d6ca605b9e7b177309
+0	9	0	clean	5430a8c815a28d05
+0	9	0	clean	5430a8c815a28d05
+2	294	1672120190	CMakeFiles/avencoderffmpeg.dir/encoder/SoftAudioEncoder.cpp.o	9deb8dddb9473e41
+2	314	1672120190	CMakeFiles/avencoderffmpeg.dir/jinencoder.cpp.o	d2dc86f083f76f95
+2	326	1672120190	CMakeFiles/avencoderffmpeg.dir/encoder/SoftVideoEncoder.cpp.o	73979ce70d06bcc1
+1	413	1672120190	CMakeFiles/avencoderffmpeg.dir/encoder/IEncoder.cpp.o	cb7c244fb8786de3
+3	443	1672120190	CMakeFiles/avencoderffmpeg.dir/jni/SoftEncoderContext.cpp.o	cb17094b144d9f0b
+443	535	1672120190	/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/build/intermediates/cxx/Debug/75u703l5/obj/x86_64/libavencoderffmpeg.so	8a3d141ae74d6452
+0	12	0	clean	5430a8c815a28d05
+2	407	1672120238	CMakeFiles/avencoderffmpeg.dir/encoder/SoftAudioEncoder.cpp.o	9deb8dddb9473e41
+2	456	1672120238	CMakeFiles/avencoderffmpeg.dir/jinencoder.cpp.o	d2dc86f083f76f95
+3	497	1672120238	CMakeFiles/avencoderffmpeg.dir/encoder/SoftVideoEncoder.cpp.o	73979ce70d06bcc1
+1	582	1672120238	CMakeFiles/avencoderffmpeg.dir/encoder/IEncoder.cpp.o	cb7c244fb8786de3
+4	590	1672120238	CMakeFiles/avencoderffmpeg.dir/jni/SoftEncoderContext.cpp.o	cb17094b144d9f0b
+590	691	1672120238	/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/build/intermediates/cxx/Debug/75u703l5/obj/x86_64/libavencoderffmpeg.so	8a3d141ae74d6452
+0	10	0	clean	5430a8c815a28d05
+2	335	1672120276	CMakeFiles/avencoderffmpeg.dir/encoder/SoftAudioEncoder.cpp.o	9deb8dddb9473e41
+2	335	1672120276	CMakeFiles/avencoderffmpeg.dir/encoder/SoftVideoEncoder.cpp.o	73979ce70d06bcc1
+1	353	1672120276	CMakeFiles/avencoderffmpeg.dir/jinencoder.cpp.o	d2dc86f083f76f95
+1	419	1672120276	CMakeFiles/avencoderffmpeg.dir/encoder/IEncoder.cpp.o	cb7c244fb8786de3
+2	469	1672120276	CMakeFiles/avencoderffmpeg.dir/jni/SoftEncoderContext.cpp.o	cb17094b144d9f0b
+469	557	1672120277	/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/build/intermediates/cxx/Debug/75u703l5/obj/x86_64/libavencoderffmpeg.so	8a3d141ae74d6452

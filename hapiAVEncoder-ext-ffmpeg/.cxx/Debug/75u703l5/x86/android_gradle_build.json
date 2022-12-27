@@ -1,0 +1,38 @@
+{
+  "buildFiles": [
+    "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/manjiale/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+      "-C",
+      "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/.cxx/Debug/75u703l5/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/manjiale/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+    "-C",
+    "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/.cxx/Debug/75u703l5/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "avencoderffmpeg::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "x86",
+      "artifactName": "avencoderffmpeg",
+      "output": "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/build/intermediates/cxx/Debug/75u703l5/obj/x86/libavencoderffmpeg.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/manjiale/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/manjiale/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

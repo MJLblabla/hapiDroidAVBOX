@@ -1,0 +1,3 @@
+/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/hapiRTMPLiveStreamer/.cxx/Debug/4zi1i2s1/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/hapiRTMPLiveStreamer/.cxx/Debug/4zi1i2s1/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/hapiRTMPLiveStreamer/.cxx/Debug/4zi1i2s1/armeabi-v7a/CMakeFiles/rtmpmuxer.dir

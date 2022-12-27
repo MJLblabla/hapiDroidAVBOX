@@ -1,0 +1,39 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+    }
+}
+rootProject.name = "hapiDroidAVBOX"
+include ':app'
+include ':hapiAVPackerClinet'
+include ':hapiAVCapture'
+include ':baseAVUitl'
+include ':hapiAVEncoder'
+include ':baseAVParam'
+include ':hapiAVEncoder-ext-ffmpeg'
+
+include ':hapiIMuxer'
+include ':outputstream-ext:droidLocalMediaMuxer'
+include ':outputstream-ext:hapiSRTLiveSTreamer'
+include ':outputstream-ext:hapiRTMPLiveStreamer'
+
+//include ':lib'

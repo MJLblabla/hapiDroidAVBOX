@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/.cxx/Debug/2x53c261/arm64-v8a",
+  "command": "/Users/manjiale/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/manjiale/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/manjiale/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Davcapture_EXPORTS -I/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/glm -I/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/render -I/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/util -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC -o CMakeFiles/avcapture.dir/rendercontext.cpp.o -c /Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/rendercontext.cpp",
+  "file": "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/rendercontext.cpp"
+},
+{
+  "directory": "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/.cxx/Debug/2x53c261/arm64-v8a",
+  "command": "/Users/manjiale/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/Users/manjiale/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/manjiale/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Davcapture_EXPORTS -I/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/glm -I/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/render -I/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/util -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC -o CMakeFiles/avcapture.dir/util/GLUtils.cpp.o -c /Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/util/GLUtils.cpp",
+  "file": "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/src/main/cpp/util/GLUtils.cpp"
+}
+]

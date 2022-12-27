@@ -1,0 +1,14 @@
+prefix=/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/src/main/jniLibsFFmpegbuild/build/ffmpeg/x86-64
+exec_prefix=${prefix}
+libdir=/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/src/main/jniLibsFFmpegbuild/build/ffmpeg/x86-64/lib
+includedir=/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/src/main/jniLibsFFmpegbuild/build/ffmpeg/x86-64/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 56.31.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil -pthread -lm
+Libs.private: 
+Cflags: -I${includedir}

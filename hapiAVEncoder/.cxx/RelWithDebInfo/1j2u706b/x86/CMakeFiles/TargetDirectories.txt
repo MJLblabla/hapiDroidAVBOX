@@ -1,0 +1,3 @@
+/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/.cxx/RelWithDebInfo/1j2u706b/x86/CMakeFiles/rebuild_cache.dir
+/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/.cxx/RelWithDebInfo/1j2u706b/x86/CMakeFiles/edit_cache.dir
+/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/.cxx/RelWithDebInfo/1j2u706b/x86/CMakeFiles/avencoder.dir

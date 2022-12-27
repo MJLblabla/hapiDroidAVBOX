@@ -1,0 +1,59 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "avencoderffmpeg",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "avencoderffmpeg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-avencoderffmpeg-Debug-8fb153d7a7a68684e481.json",
+					"name" : "avencoderffmpeg",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/.cxx/Debug/75u703l5/x86",
+		"source" : "/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/src/main/cpp"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 1
+	}
+}

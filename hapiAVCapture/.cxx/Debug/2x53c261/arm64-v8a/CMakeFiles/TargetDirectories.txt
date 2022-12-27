@@ -1,0 +1,3 @@
+/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/.cxx/Debug/2x53c261/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/.cxx/Debug/2x53c261/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/manjiale/dev/hapiDroidAVBOX/hapiAVCapture/.cxx/Debug/2x53c261/arm64-v8a/CMakeFiles/avcapture.dir
