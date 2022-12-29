@@ -60,42 +60,15 @@ void SrtLiveConnection::open(SrtConfig &config) {
     });
 }
 
-void SrtLiveConnection::senSRTPacket(int boundary, long srctime, int msgttl, char *data,
-                                     int size) {
+void SrtLiveConnection::senSRTPacket(SRTMsgPacket &packet) {
     if(!isOpen){
         return;
     }
-    auto *packet = new SRTMsgPacket();
-    packet->boundary = boundary;
-    packet->srctime = srctime;
-    packet->msgttl = msgttl;
-    packet->canBuffer = true;
-    packet->dataSize = size;
-    // IConnection::allocatePacket(&packet->data, size, false);
-    // memcpy(packet->data, data, size);
-    // IConnection::pushPacket(packet);
-    packet->data = data;
-    sendOutPacket(packet);
-    packet->data = nullptr;
-    delete packet;
-    packet = nullptr;
-}
-
-void SrtLiveConnection::close() {
-    onClose();
-    srt_close(mSRTSocket);
-}
-
-void SrtLiveConnection::sendOutPacket(Packet *packet) {
-    auto *srtPacket = reinterpret_cast<SRTMsgPacket *>(packet);
-    if (srtPacket == nullptr) {
-        return;
-    }
     SRT_MSGCTRL mc = srt_msgctrl_default;
-    mc.msgttl = srtPacket->msgttl;
-    mc.srctime = srtPacket->srctime;
-    mc.boundary = srtPacket->boundary;
-    int retSend = srt_sendmsg2(mSRTSocket, (srtPacket->data), srtPacket->dataSize, &mc);
+    mc.msgttl = packet.msgttl;
+    mc.srctime = packet.srctime;
+    mc.boundary = packet.boundary;
+    int retSend = srt_sendmsg2(mSRTSocket, (packet.data), packet.dataSize, &mc);
     if (retSend <= 0) {
         sendEvent(EVENT_SEND_PACKET_FAIL, "todo");
         SRT_SOCKSTATUS sockstatus = srt_getsockstate(mSRTSocket);
@@ -105,6 +78,10 @@ void SrtLiveConnection::sendOutPacket(Packet *packet) {
     }
 }
 
+void SrtLiveConnection::close() {
+    onClose();
+    srt_close(mSRTSocket);
+}
 void SrtLiveConnection::biStats(SRT_TRACEBSTATS *status) const {
     srt_bistats(mSRTSocket, status, 1, 1);
 }

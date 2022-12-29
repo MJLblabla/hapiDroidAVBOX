@@ -123,6 +123,7 @@ public:
     uint8_t *data = nullptr;
     int dataSize = 0;
     int64_t pts = 0;
+
     Frame() = default;
 
     virtual ~Frame() {
@@ -144,20 +145,58 @@ public:
         frameType = 0;
     };
 
+    VideoFrame(VideoFrame &&other) noexcept {
+        this->format = other.format;
+        this->frameTimestamp = other.frameTimestamp;
+        this->height = other.height;
+        this->width = other.width;
+        this->dataSize = other.dataSize;
+        this->pts = other.pts;
+        this->data = std::move(other.data);
+    }
+
+    VideoFrame &operator=(VideoFrame &&other) {
+        this->format = other.format;
+        this->frameTimestamp = other.frameTimestamp;
+        this->height = other.height;
+        this->width = other.width;
+        this->dataSize = other.dataSize;
+        this->pts = other.pts;
+        this->data = std::move(other.data);
+    }
+
     ~VideoFrame() = default;
 };
 
 class AudioFrame : public Frame {
 public:
+    AVSampleFormat out_sample_fmt{};
+    int64_t audioChannelLayout{};
+    int audioSampleRate{};
+
     AudioFrame() {
         frameType = 1;
     };
 
     ~AudioFrame() = default;
 
-    AVSampleFormat out_sample_fmt{};
-    int64_t audioChannelLayout{};
-    int audioSampleRate{};
+    AudioFrame(AudioFrame &&other) noexcept {
+        this->out_sample_fmt = other.out_sample_fmt;
+        this->audioChannelLayout = other.audioChannelLayout;
+        this->audioSampleRate = other.audioSampleRate;
+        this->dataSize = other.dataSize;
+        this->pts = other.pts;
+        this->data = std::move(other.data);
+    }
+
+    AudioFrame &operator=(AudioFrame &&other) {
+        this->out_sample_fmt = other.out_sample_fmt;
+        this->audioChannelLayout = other.audioChannelLayout;
+        this->audioSampleRate = other.audioSampleRate;
+        this->dataSize = other.dataSize;
+        this->pts = other.pts;
+        this->data = std::move(other.data);
+    }
 
     void setChannel(int channelCount) {
         if (channelCount == 1) {

@@ -20,7 +20,7 @@ private:
     std::mutex mutex;
     std::condition_variable cond;
     thread *encoderThread = nullptr;
-    void recycleByteBuffer(Frame *frame);
+   // void recycleByteBuffer(Frame *frame);
 
 protected:
     EncodeParam param;
@@ -45,7 +45,7 @@ public:
 
     void resume();
 
-    void onFrame(Frame *frame);
+    void onFrame(Frame &frame);
 
     virtual void updateBitRate(int bitRate) = 0;
 

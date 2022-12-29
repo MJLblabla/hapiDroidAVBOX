@@ -25,9 +25,9 @@ Java_com_hapi_srtlive_SRTConnection_native_1uninit(JNIEnv *env, jobject thiz, jl
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_hapi_srtlive_SRTConnection_native_1open(JNIEnv *env, jobject thiz, jlong handler,
-                                                    jstring stream_id, jstring ip_address,
-                                                    jint port, jint payload_size, jint max_bw,
-                                                    jint input_bw) {
+                                                 jstring stream_id, jstring ip_address,
+                                                 jint port, jint payload_size, jint max_bw,
+                                                 jint input_bw) {
     auto *connection = reinterpret_cast<JNISRTConnection *>(handler);
     char *string_stream_id = const_cast<char *>(env->GetStringUTFChars(stream_id, nullptr));
     char *string_ip_address = const_cast<char *>(env->GetStringUTFChars(ip_address, nullptr));
@@ -48,12 +48,21 @@ Java_com_hapi_srtlive_SRTConnection_native_1open(JNIEnv *env, jobject thiz, jlon
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_hapi_srtlive_SRTConnection_native_1send(JNIEnv *env, jobject thiz, jlong handler,
-                                                  jobject msg, jint offset, jint limit, jint ttl,
-                                                  jlong src_time,
-                                                  jint boundary) {
+                                                 jobject msg, jint offset, jint limit, jint ttl,
+                                                 jlong src_time,
+                                                 jint boundary) {
+
     auto *connection = reinterpret_cast<JNISRTConnection *>(handler);
     char *buf = (char *) env->GetDirectBufferAddress(msg);
-    connection->srtConnection.senSRTPacket(boundary, src_time, ttl, (buf)+offset, limit - offset);
+    SRTMsgPacket packet;
+    packet.boundary = boundary;
+    packet.srctime = src_time;
+    packet.msgttl = ttl;
+    packet.canBuffer = true;
+    packet.dataSize = limit - offset;
+    packet.data = (buf) + offset;
+    connection->srtConnection.senSRTPacket(packet);
+    packet.data = nullptr;
 }
 
 extern "C"

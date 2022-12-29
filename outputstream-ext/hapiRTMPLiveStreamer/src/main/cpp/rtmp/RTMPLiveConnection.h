@@ -16,7 +16,7 @@ private:
     long mStartTime = 0;
    // volatile bool isOpen = false;
 protected:
-    void sendOutPacket(Packet *packet) override;
+    void sendOutPacket(Packet &packet) override;
 
 public:
     RTMP *mRtmp = nullptr;

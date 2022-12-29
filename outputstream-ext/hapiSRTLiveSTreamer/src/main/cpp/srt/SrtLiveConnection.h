@@ -71,6 +71,17 @@ public:
 
     SRTMsgPacket() = default;
 
+    SRTMsgPacket(SRTMsgPacket &other) noexcept {
+        this->data = static_cast<char *>(malloc(other.dataSize));
+        memcpy(this->data, other.data, other.dataSize);
+        this->dataSize = other.dataSize;
+        this->packetType = other.packetType;
+        this->canBuffer = other.canBuffer;
+        this->boundary = other.boundary;
+        this->srctime = other.srctime;
+        this->msgttl = other.msgttl;
+    }
+
     ~SRTMsgPacket() override = default;
 };
 
@@ -80,17 +91,15 @@ private:
     int PAT_PACKET_PERIOD = 40;
     SRTSOCKET mSRTSocket;
     SrtConfig *srtConfig = nullptr;
-protected:
-    void sendOutPacket(Packet *packet) override;
 
 public:
     SrtLiveConnection();
 
     ~SrtLiveConnection() override;
 
-    void open( SrtConfig &config);
+    void open(SrtConfig &config);
 
-    void senSRTPacket(int boundary, long srctime, int msgttl,  char *data, int size);
+    void senSRTPacket(SRTMsgPacket &packet);
 
     void close();
 

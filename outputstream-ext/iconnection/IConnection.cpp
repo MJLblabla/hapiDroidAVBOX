@@ -6,15 +6,15 @@
 
 #include <utility>
 
-void IConnection::changeConnectedStatus(int status) {
+void IConnection::changeConnectedStatus(int status) const {
     if (connectCallBack != nullptr) {
         connectCallBack(status);
     }
 }
 
-void IConnection::sendEvent(int envent, string msg) {
+void IConnection::sendEvent(int envent, string msg) const {
     if (enventCallBack != nullptr) {
-        enventCallBack(envent, msg);
+        enventCallBack(envent, std::move(msg));
     }
 }
 
@@ -55,7 +55,7 @@ void IConnection::onOpen(bool startLoop) {
             Packet *packet = nullptr;
             packetQueue.PopFront(packet);
             if (packet) {
-                sendOutPacket(packet);
+                sendOutPacket(*packet);
                 delete packet;
                 packet = nullptr;
             }
@@ -90,3 +90,5 @@ IConnection::~IConnection() {
         workThread = nullptr;
     }
 }
+
+void IConnection::sendOutPacket(Packet &packet){}

@@ -49,9 +49,9 @@ void RTMPLiveConnection::sendFLVPacket(Packet &packet) {
     pushPacket(copy);
 }
 
-void RTMPLiveConnection::sendOutPacket(Packet *packet) {
+void RTMPLiveConnection::sendOutPacket(Packet &packet) {
    // LOGCATE("sendOutPacket %p",mRtmp);
-    int ret = RTMP_Write(mRtmp, packet->data, packet->dataSize);
+    int ret = RTMP_Write(mRtmp, packet.data, packet.dataSize);
     if (ret <= 0) {
         sendEvent(EVENT_SEND_PACKET_FAIL, "todo");
         LOGCATE("RTMPLiveConnection::RTMP_Write %d  ", ret);

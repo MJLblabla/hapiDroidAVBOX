@@ -77,13 +77,13 @@ Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeOnAudioFrame(JNIEnv *env, 
     auto *c_array = reinterpret_cast<jbyte *>(env->GetDirectBufferAddress(
             data));
     jlong len_arr = env->GetDirectBufferCapacity(data);
-    auto *audioFrame = new AudioFrame();
-    audioFrame->dataSize = len_arr;
-    audioFrame->data = reinterpret_cast<uint8_t *>(c_array);
-    audioFrame->out_sample_fmt = AVSampleFormat(sample_fmt);
-    audioFrame->audioSampleRate = audio_sample_rate;
-    audioFrame->setChannel(audio_channel_count);
-    audioFrame->pts = pts;
+    AudioFrame audioFrame ;
+    audioFrame.dataSize = len_arr;
+    audioFrame.data = reinterpret_cast<uint8_t *>(c_array);
+    audioFrame.out_sample_fmt = AVSampleFormat(sample_fmt);
+    audioFrame.audioSampleRate = audio_sample_rate;
+    audioFrame.setChannel(audio_channel_count);
+    audioFrame.pts = pts;
     encoder->softEncoder->onFrame(audioFrame);
 
 }
@@ -101,14 +101,14 @@ Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeOnVideoFrame(JNIEnv *env, 
 
     auto *c_array = reinterpret_cast<jbyte *>(env->GetDirectBufferAddress(data));
     jlong len_arr = env->GetDirectBufferCapacity(data);
-    auto *videoFrame = new VideoFrame();
-    videoFrame->dataSize = len_arr;
-    videoFrame->data = reinterpret_cast<uint8_t *>(c_array);
-    videoFrame->width = width;
-    videoFrame->height = height;
-    videoFrame->format = (format);
-    videoFrame->frameTimestamp = frame_timestamp;
-    videoFrame->pts = pts;
+    VideoFrame videoFrame;
+    videoFrame.dataSize = len_arr;
+    videoFrame.data = reinterpret_cast<uint8_t *>(c_array);
+    videoFrame.width = width;
+    videoFrame.height = height;
+    videoFrame.format = (format);
+    videoFrame.frameTimestamp = frame_timestamp;
+    videoFrame.pts = pts;
     encoder->softEncoder->onFrame(videoFrame);
 }
 extern "C"

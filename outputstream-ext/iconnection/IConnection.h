@@ -67,10 +67,10 @@ protected:
 
     int mConnectedStatus = CONNECTED_STATUS_NULL;
     volatile bool isOpen = false;
-    void changeConnectedStatus(int status);
-    void sendEvent(int envent,string msg);
+    void changeConnectedStatus(int status) const;
+    void sendEvent(int envent,string msg) const;
 
-    virtual void sendOutPacket(Packet *packet) = 0;
+    virtual void sendOutPacket(Packet &packet);
 
     void pushPacket(Packet *packet);
 

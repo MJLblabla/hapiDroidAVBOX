@@ -53,8 +53,8 @@ int SoftAudioEncoder::openCodec() {
 
 void SoftAudioEncoder::encodeFrame(Frame *frame) {
     if (frame != nullptr) {
-        auto audioFrame = reinterpret_cast<const AudioFrame &>(frame);
-        mAVFrame->data[0] = audioFrame.data;
+        auto audioFrame = reinterpret_cast<const AudioFrame *>(frame);
+        mAVFrame->data[0] = audioFrame->data;
         mAVFrame->pts = frame->pts;
         //  relativelyPts += mAVFrame->nb_samples;
         int ret = avcodec_send_frame(mAVCodecCtx, mAVFrame);

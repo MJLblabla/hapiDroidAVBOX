@@ -4,9 +4,16 @@
 
 #include "IEncoder.h"
 
-void IEncoder::onFrame(Frame *frame) {
+void IEncoder::onFrame(Frame &frame) {
     if (state == STATE_DECODING) {
-        frameQueue.PushBack(frame);
+        if (frame.frameType == 0) {
+            auto videoFrame = new VideoFrame(std::move(reinterpret_cast<VideoFrame &>(frame)));
+            frameQueue.PushBack(videoFrame);
+        }
+        if (frame.frameType == 1) {
+            auto audioFrame = new AudioFrame(std::move(reinterpret_cast<AudioFrame &>(frame)));
+            frameQueue.PushBack(audioFrame);
+        }
     }
 }
 
@@ -30,18 +37,35 @@ void IEncoder::start() {
         while (this->state != STATE_STOP) {
             while (this->state == STATE_PAUSE) {
                 std::unique_lock<std::mutex> lock(mutex);
-                cond.wait_for(lock, std::chrono::milliseconds(10));
+                cond.wait_for(lock, std::chrono::milliseconds(200));
             }
             if (this->state != STATE_STOP) {
                 Frame *frame = nullptr;
                 frameQueue.PopFront(frame);
                 if (frame) {
                     encodeFrame(frame);
-                    recycleByteBuffer(frame);
+                    if (isAllocateAVFrameBuffer && frame != nullptr &&
+                        freeBufferQueue.Size() < freeBufferQueue.Capacity() - 1) {
+                        freeBufferQueue.PushFront(frame->data);
+                        frame->data = nullptr;
+                    }
                 }
                 delete frame;
                 frame = nullptr;
             }
+        }
+        while (!freeBufferQueue.Empty()) {
+            uint8_t *data = nullptr;
+            freeBufferQueue.PopBack(data);
+            if (data != nullptr) {
+                free(data);
+            }
+            data = nullptr;
+        }
+        while (!frameQueue.Empty()) {
+            Frame *frame = nullptr;
+            frameQueue.PopBack(frame);
+            delete frame;
         }
     });
 }
@@ -52,7 +76,7 @@ void IEncoder::pause() {
 }
 
 void IEncoder::resume() {
-    std::unique_lock<std::mutex> lock(mutex);
+    // std::unique_lock<std::mutex> lock(mutex);
     state = STATE_DECODING;
     cond.notify_all();
 }
@@ -67,19 +91,6 @@ void IEncoder::stop() {
         encoderThread = nullptr;
     }
     stopFlush();
-    while (!freeBufferQueue.Empty()) {
-        uint8_t *data = nullptr;
-        freeBufferQueue.PopBack(data);
-        if (data != nullptr) {
-            free(data);
-        }
-        data = nullptr;
-    }
-    while (!frameQueue.Empty()) {
-        Frame *frame = nullptr;
-        frameQueue.PopBack(frame);
-        delete frame;
-    }
 }
 
 IEncoder::~IEncoder() {
@@ -95,17 +106,3 @@ void IEncoder::allocateAVFrameBuffer(uint8_t **address, int size) {
         freeBufferQueue.PopFront(*address);
     }
 }
-
-void IEncoder::recycleByteBuffer(Frame *frame) {
-    if (!isAllocateAVFrameBuffer) {
-        return;
-    }
-    if (freeBufferQueue.Size() > freeBufferQueue.Capacity() - 1) {
-    } else {
-        if (frame != nullptr) {
-            freeBufferQueue.PushFront(frame->data);
-            frame->data = nullptr;
-        }
-    }
-}
-
