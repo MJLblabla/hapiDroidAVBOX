@@ -168,4 +168,5 @@ Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeConfigureAudio(JNIEnv *env
     encodeParam.audioBitrate = audio_bitrate;
     encodeParam.hasAudio = true;
     encoder->softEncoder->configure(encodeParam);
+
 }

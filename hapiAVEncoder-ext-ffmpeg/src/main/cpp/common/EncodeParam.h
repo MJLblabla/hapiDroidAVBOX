@@ -153,6 +153,7 @@ public:
         this->dataSize = other.dataSize;
         this->pts = other.pts;
         this->data = std::move(other.data);
+        other.data= nullptr;
     }
 
     VideoFrame &operator=(VideoFrame &&other) {
@@ -163,6 +164,7 @@ public:
         this->dataSize = other.dataSize;
         this->pts = other.pts;
         this->data = std::move(other.data);
+        other.data= nullptr;
     }
 
     ~VideoFrame() = default;
@@ -187,6 +189,7 @@ public:
         this->dataSize = other.dataSize;
         this->pts = other.pts;
         this->data = std::move(other.data);
+        other.data= nullptr;
     }
 
     AudioFrame &operator=(AudioFrame &&other) {
@@ -196,6 +199,7 @@ public:
         this->dataSize = other.dataSize;
         this->pts = other.pts;
         this->data = std::move(other.data);
+        other.data= nullptr;
     }
 
     void setChannel(int channelCount) {
