@@ -53,7 +53,8 @@ void IEncoder::pause() {
 
 void IEncoder::resume() {
     std::unique_lock<std::mutex> lock(mutex);
-    state = STATE_PAUSE;
+    state = STATE_DECODING;
+    cond.notify_all();
 }
 
 void IEncoder::stop() {
