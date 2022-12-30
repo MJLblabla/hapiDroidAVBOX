@@ -9,6 +9,7 @@
 #include "SoftVideoEncoder.h"
 #include "SoftAudioEncoder.h"
 
+
 class SoftEncoderContext {
 
 private:
@@ -29,7 +30,9 @@ public:
     jobject mJavaObj = nullptr;
     bool isVideoGetExtra = false;
     bool isAudioGetExtra = false;
+
     void resetFirstFrameFlag();
+
     void create(JNIEnv *env, jobject thiz, jint media_type);
 
     ~SoftEncoderContext();

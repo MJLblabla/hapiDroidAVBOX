@@ -50,9 +50,6 @@ private:
     std::condition_variable m_noEmptyCondVar;
 };
 
-
-#include "BlockQueue.h"
-
 template<typename T>
 BlockQueue<T>::BlockQueue(int MaxSize) :
         m_isClose(false),

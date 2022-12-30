@@ -64,7 +64,7 @@ class AVResampleContext {
             mNativeContextHandler,
             audioFrame.buffer,
             audioFrame.audioFormat.ffmpegFMT,
-            audioFrame.AVChannelConfig.count,
+            audioFrame.channelConfig.count,
             audioFrame.sampleRateInHz, outFrame
         )
     }
@@ -76,7 +76,7 @@ class AVResampleContext {
             mNativeContextHandler,
             audioFrame.buffer.limit(),
             audioFrame.audioFormat.ffmpegFMT,
-            audioFrame.AVChannelConfig.count,
+            audioFrame.channelConfig.count,
             audioFrame.sampleRateInHz
         )
         return audioFrameOutPutSize;

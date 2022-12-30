@@ -63,57 +63,6 @@ public:
         return av_get_channel_layout_nb_channels(audioChannelLayout);
         //return 0;
     }
-
-    int getSampleDeep() {
-        int sampleDeep = 0;
-        switch (out_sample_fmt) {
-            case AV_SAMPLE_FMT_NONE :
-                sampleDeep = 0;
-                break;
-            case AV_SAMPLE_FMT_U8:
-                sampleDeep = 8;
-                break;          ///< unsigned 8 bits
-            case AV_SAMPLE_FMT_S16:
-                sampleDeep = 16;
-                break;       ///< signed 16 bits
-            case AV_SAMPLE_FMT_S32:
-                sampleDeep = 32;
-                break;         ///< signed 32 bits
-            case AV_SAMPLE_FMT_FLT:
-                sampleDeep = 0;
-                break;         ///< float
-            case AV_SAMPLE_FMT_DBL:
-                sampleDeep = 0;
-                break;         ///< double
-
-            case AV_SAMPLE_FMT_U8P:
-                sampleDeep = 8;
-                break;        ///< unsigned 8 bits, planar
-            case AV_SAMPLE_FMT_S16P:
-                sampleDeep = 16;
-                break;        ///< signed 16 bits, planar
-            case AV_SAMPLE_FMT_S32P:
-                sampleDeep = 32;
-                break;        ///< signed 32 bits, planar
-            case AV_SAMPLE_FMT_FLTP:
-                sampleDeep = 0;
-                break;       ///< float, planar
-            case AV_SAMPLE_FMT_DBLP:
-                sampleDeep = 0;
-                break;        ///< double, planar
-            case AV_SAMPLE_FMT_S64:
-                sampleDeep = 64;
-                break;         ///< signed 64 bits
-            case AV_SAMPLE_FMT_S64P:
-                sampleDeep = 64;
-                break;       ///< signed 64 bits, planar
-
-            case AV_SAMPLE_FMT_NB  :
-                sampleDeep = 0;
-                break;         ///< Number of sample formats. DO NOT USE if linking dynamically
-        }
-        return sampleDeep;
-    }
 };
 
 class Frame {
@@ -124,82 +73,38 @@ public:
     int dataSize = 0;
     int64_t pts = 0;
 
-    Frame() = default;
-
-    virtual ~Frame() {
-        if (data) {
-            free(this->data);
-        }
-        data = nullptr;
-    }
-};
-
-class VideoFrame : public Frame {
-public:
     int width = 0;
     int height = 0;
     int format = IMAGE_FORMAT_I420;
     int64_t frameTimestamp = 0;
 
-    VideoFrame() {
-        frameType = 0;
-    };
+    AVSampleFormat out_sample_fmt = AV_SAMPLE_FMT_NONE;
+    int64_t audioChannelLayout = 1;
+    int audioSampleRate = 0;
 
-    VideoFrame(VideoFrame &&other) noexcept {
+    Frame() = default;
+
+    ~Frame() {
+        if (data) {
+            free(this->data);
+        }
+        data = nullptr;
+    }
+
+    void clone(uint8_t *buffer, Frame &other) {
         this->format = other.format;
         this->frameTimestamp = other.frameTimestamp;
         this->height = other.height;
         this->width = other.width;
         this->dataSize = other.dataSize;
         this->pts = other.pts;
-        this->data = std::move(other.data);
-        other.data= nullptr;
-    }
 
-    VideoFrame &operator=(VideoFrame &&other) {
-        this->format = other.format;
-        this->frameTimestamp = other.frameTimestamp;
-        this->height = other.height;
-        this->width = other.width;
-        this->dataSize = other.dataSize;
-        this->pts = other.pts;
-        this->data = std::move(other.data);
-        other.data= nullptr;
-    }
-
-    ~VideoFrame() = default;
-};
-
-class AudioFrame : public Frame {
-public:
-    AVSampleFormat out_sample_fmt{};
-    int64_t audioChannelLayout{};
-    int audioSampleRate{};
-
-    AudioFrame() {
-        frameType = 1;
-    };
-
-    ~AudioFrame() = default;
-
-    AudioFrame(AudioFrame &&other) noexcept {
         this->out_sample_fmt = other.out_sample_fmt;
         this->audioChannelLayout = other.audioChannelLayout;
         this->audioSampleRate = other.audioSampleRate;
-        this->dataSize = other.dataSize;
-        this->pts = other.pts;
-        this->data = std::move(other.data);
-        other.data= nullptr;
-    }
 
-    AudioFrame &operator=(AudioFrame &&other) {
-        this->out_sample_fmt = other.out_sample_fmt;
-        this->audioChannelLayout = other.audioChannelLayout;
-        this->audioSampleRate = other.audioSampleRate;
-        this->dataSize = other.dataSize;
-        this->pts = other.pts;
-        this->data = std::move(other.data);
-        other.data= nullptr;
+        memcpy(buffer, other.data, other.dataSize);
+        this->data = buffer;
     }
 
     void setChannel(int channelCount) {
@@ -213,57 +118,6 @@ public:
     int getChannelCount() const {
         // return 0;
         return av_get_channel_layout_nb_channels(audioChannelLayout);
-    }
-
-    int getSampleDeep() const {
-        int sampleDeep = 0;
-        switch (out_sample_fmt) {
-            case AV_SAMPLE_FMT_NONE :
-                sampleDeep = 0;
-                break;
-            case AV_SAMPLE_FMT_U8:
-                sampleDeep = 8;
-                break;          ///< unsigned 8 bits
-            case AV_SAMPLE_FMT_S16:
-                sampleDeep = 16;
-                break;       ///< signed 16 bits
-            case AV_SAMPLE_FMT_S32:
-                sampleDeep = 32;
-                break;         ///< signed 32 bits
-            case AV_SAMPLE_FMT_FLT:
-                sampleDeep = 0;
-                break;         ///< float
-            case AV_SAMPLE_FMT_DBL:
-                sampleDeep = 0;
-                break;         ///< double
-
-            case AV_SAMPLE_FMT_U8P:
-                sampleDeep = 8;
-                break;        ///< unsigned 8 bits, planar
-            case AV_SAMPLE_FMT_S16P:
-                sampleDeep = 16;
-                break;        ///< signed 16 bits, planar
-            case AV_SAMPLE_FMT_S32P:
-                sampleDeep = 32;
-                break;        ///< signed 32 bits, planar
-            case AV_SAMPLE_FMT_FLTP:
-                sampleDeep = 0;
-                break;       ///< float, planar
-            case AV_SAMPLE_FMT_DBLP:
-                sampleDeep = 0;
-                break;        ///< double, planar
-            case AV_SAMPLE_FMT_S64:
-                sampleDeep = 64;
-                break;         ///< signed 64 bits
-            case AV_SAMPLE_FMT_S64P:
-                sampleDeep = 64;
-                break;       ///< signed 64 bits, planar
-
-            case AV_SAMPLE_FMT_NB  :
-                sampleDeep = 0;
-                break;         ///< Number of sample formats. DO NOT USE if linking dynamically
-        }
-        return sampleDeep;
     }
 };
 

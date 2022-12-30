@@ -20,7 +20,7 @@ class VideoEncodeFrame(
 
 class AudioEncodeFrame(
     val sampleRateInHz: Int,
-    val AVChannelConfig: AVChannelConfig,
+    val channelConfig: AVChannelConfig,
     val audioFormat: AVSampleFormat,
     val buffer: ByteBuffer
 ) {

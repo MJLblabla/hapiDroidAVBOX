@@ -150,7 +150,7 @@ abstract class MediaEncoder<T> : IEncoder {
 
     }
 
-    override fun allocateAVFrameBuffer(size: Int): ByteBuffer {
+    protected fun allocateAVFrameBuffer(size: Int): ByteBuffer {
         return mAVFrameQueue.allocateAVFrameBuffer(size)
     }
 }
@@ -295,7 +295,19 @@ class VideoMediaEncoder : MediaEncoder<VideoEncodeFrame>(), IVideoEncoder {
         if (mAVFrameQueue.frameSize() > mAVFrameQueue.maxFreeBufferSize) {
             return
         }
-        mAVFrameQueue.pushFrame(frame)
+        mAVFrameQueue.pushFrame(VideoEncodeFrame(
+            frame.width,
+            frame.height,
+            0,
+            allocateAVFrameBuffer(frame.buffer.capacity()).apply {
+                clear()
+                put(frame.buffer)
+                flip()
+            },
+            frame.AVImgFmt
+        ).apply {
+            pts = frame.pts
+        })
     }
 
     private fun Double.format2(): Double {
@@ -423,6 +435,17 @@ class AudioMediaEncoder : MediaEncoder<AudioEncodeFrame>(), IAudioEncoder {
         if (mAVFrameQueue.frameSize() > mAVFrameQueue.maxFreeBufferSize) {
             return
         }
-        mAVFrameQueue.pushFrame(frame)
+        mAVFrameQueue.pushFrame(AudioEncodeFrame(
+            frame.sampleRateInHz,
+            frame.channelConfig,
+            frame.audioFormat,
+            allocateAVFrameBuffer(frame.buffer.capacity()).apply {
+                clear()
+                put(frame.buffer)
+                flip()
+            }
+        ).apply {
+            this.pts = frame.pts
+        })
     }
 }

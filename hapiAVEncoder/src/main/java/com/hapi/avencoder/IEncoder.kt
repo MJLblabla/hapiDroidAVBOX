@@ -15,7 +15,6 @@ interface IEncoder {
     fun resume()
     fun release()
     fun updateBitRate(bitRate: Int)
-    fun allocateAVFrameBuffer(size: Int): ByteBuffer
 }
 
 interface IVideoEncoder : IEncoder {
@@ -98,6 +97,7 @@ open class EncoderContext internal constructor(private val encoder: IEncoder) {
 
 class VideoEncoderContext internal constructor(val videoEncoder: IVideoEncoder) :
     EncoderContext(videoEncoder) {
+    private var outputBuffer: ByteBuffer? = null
     private var fpsFilter = FPSFilter()
     private var mParam: VideoEncodeParam? = null
     internal fun configure(encodeParam: VideoEncodeParam): MediaFormat? {
@@ -136,27 +136,29 @@ class VideoEncoderContext internal constructor(val videoEncoder: IVideoEncoder) 
             return
         }
         fpsFilter.filter(frame) { filterFrame ->
-            val outputBuffer = videoEncoder.allocateAVFrameBuffer(
-                mParam!!.frameHeight * mParam!!.frameWidth * 3 / 2
-            )
-            outputBuffer.clear()
-            if (
+            val buffer = if (
                 filterFrame.width != mParam!!.frameWidth ||
                 filterFrame.height != mParam!!.frameHeight ||
                 filterFrame.rotationDegrees != 0 ||
                 filterFrame.AVImgFmt.fmt != mAVResampleContext.configFormat.fmt
             ) {
-                mAVResampleContext.onVideoData(filterFrame, outputBuffer)
+                if (outputBuffer == null) {
+                    outputBuffer =
+                        ByteBuffer.allocateDirect(mParam!!.frameHeight * mParam!!.frameWidth * 3 / 2)
+                }
+                outputBuffer!!.clear()
+                mAVResampleContext.onVideoData(filterFrame, outputBuffer!!)
+                outputBuffer!!.limit(outputBuffer!!.capacity())
+                outputBuffer!!.position(0)
+                outputBuffer
             } else {
-                outputBuffer.put(filterFrame.buffer)
+                (filterFrame.buffer)
             }
-            outputBuffer.limit(outputBuffer.capacity())
-            outputBuffer.position(0)
             videoEncoder.onFrame(VideoEncodeFrame(
                 mParam!!.frameWidth,
                 mParam!!.frameHeight,
                 0,
-                outputBuffer,
+                buffer!!,
                 mAVResampleContext.configFormat
             ).apply {
                 pts = filterFrame.pts
@@ -170,7 +172,7 @@ class AudioEncoderContext internal constructor(private val audioEncoder: IAudioE
     private var mParam: AudioEncodeParam? = null
     private var mSamplesCount = 0;
     private var baseTime = 0L;
-
+    private var outputBuffer: ByteBuffer? = null
     internal fun configure(encodeParam: AudioEncodeParam): MediaFormat? {
         this.configureMediaFormat = audioEncoder.configure(encodeParam)
         if (configureMediaFormat == null) {
@@ -195,39 +197,35 @@ class AudioEncoderContext internal constructor(private val audioEncoder: IAudioE
             return
         }
         val param = mParam!!
-        val outputBuffer = if (
+        val buffer = if (
             frame.audioFormat != param.audioFormat ||
-            frame.AVChannelConfig != param.channelConfig ||
+            frame.channelConfig != param.channelConfig ||
             frame.sampleRateInHz != param.sampleRateInHz
         ) {
             if (mAVResampleContext.audioFrameOutPutSize <= 0L) {
                 mAVResampleContext.getResizeAudioFrameSize(frame)
             }
-            val outputBuffer =
-                audioEncoder.allocateAVFrameBuffer(mAVResampleContext.audioFrameOutPutSize)
-            outputBuffer.clear()
-            mAVResampleContext.onAudioData(frame, outputBuffer)
+            if (outputBuffer == null) {
+                outputBuffer = ByteBuffer.allocateDirect(mAVResampleContext.audioFrameOutPutSize)
+            }
+            outputBuffer!!.clear()
+            mAVResampleContext.onAudioData(frame, outputBuffer!!)
+            outputBuffer!!.limit(outputBuffer!!.capacity())
+            outputBuffer!!.position(0)
             outputBuffer
         } else {
-            val audioFrameOutPutSize = frame.buffer.limit()
-            val outputBuffer = audioEncoder.allocateAVFrameBuffer(
-                audioFrameOutPutSize
-            )
-            outputBuffer.clear()
-            outputBuffer.put(frame.buffer)
-            outputBuffer
+            (frame.buffer)
         }
-        outputBuffer.limit(outputBuffer.capacity())
-        outputBuffer.position(0)
+
         val audioPts = (mSamplesCount * 8 * 1000000.0 / baseTime)
-        mSamplesCount += outputBuffer.capacity()
+        mSamplesCount += buffer!!.capacity()
 
         audioEncoder.onFrame(
             AudioEncodeFrame(
                 param.sampleRateInHz,
                 param.channelConfig,
                 param.audioFormat,
-                outputBuffer
+                buffer
             ).apply {
                 this.pts = audioPts.toLong()
             }

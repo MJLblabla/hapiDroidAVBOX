@@ -4,22 +4,28 @@
 
 #include "IEncoder.h"
 
-void IEncoder::onFrame(Frame &frame) {
-    if (state == STATE_DECODING) {
-        if (frame.frameType == 0) {
-            auto videoFrame = new VideoFrame(std::move(reinterpret_cast<VideoFrame &>(frame)));
-            frameQueue.PushBack(videoFrame);
-        }
-        if (frame.frameType == 1) {
-            auto audioFrame = new AudioFrame(std::move(reinterpret_cast<AudioFrame &>(frame)));
-            frameQueue.PushBack(audioFrame);
-        }
+void IEncoder::allocateAVFrameBuffer(uint8_t **address, int size) {
+    isAllocateAVFrameBuffer = true;
+    if (freeBufferQueue.Empty()) {
+       // LOGCATE("  freeBufferQueue.Empty()" );
+        *address = static_cast<uint8_t *>(malloc(size));
+    } else {
+     //   LOGCATE("  freeBufferQueue.PopFront(*address);" );
+        freeBufferQueue.PopFront(*address);
     }
 }
 
 void IEncoder::configure(EncodeParam &encodeParam) {
     this->param = encodeParam;
     state = STATE_PREPARE;
+}
+
+void IEncoder::onFrame(Frame &frame) {
+    uint8_t *copyData = nullptr;
+    allocateAVFrameBuffer(&copyData, frame.dataSize);
+    auto copyFrame = new Frame();
+    copyFrame->clone(copyData, frame);
+    frameQueue.PushBack(copyFrame);
 }
 
 void IEncoder::start() {
@@ -42,13 +48,15 @@ void IEncoder::start() {
             if (this->state != STATE_STOP) {
                 Frame *frame = nullptr;
                 frameQueue.PopFront(frame);
-                if (frame) {
+                if (frame != nullptr) {
                     encodeFrame(frame);
-                    if (isAllocateAVFrameBuffer && frame != nullptr &&
-                        freeBufferQueue.Size() < freeBufferQueue.Capacity() - 1) {
-                        freeBufferQueue.PushFront(frame->data);
-                        frame->data = nullptr;
-                    }
+                }
+
+                if (frame != nullptr && isAllocateAVFrameBuffer &&
+                    freeBufferQueue.Size() < freeBufferQueue.Capacity() - 1) {
+                    freeBufferQueue.PushFront(frame->data);
+                 //   LOGCATE("   freeBufferQueue.PushFront   freeBufferQueue.PushFront   freeBufferQueue.PushFront");
+                    frame->data = nullptr;
                 }
                 delete frame;
                 frame = nullptr;
@@ -96,13 +104,4 @@ void IEncoder::stop() {
 IEncoder::~IEncoder() {
     delete encoderThread;
     encoderThread = nullptr;
-}
-
-void IEncoder::allocateAVFrameBuffer(uint8_t **address, int size) {
-    isAllocateAVFrameBuffer = true;
-    if (freeBufferQueue.Empty()) {
-        *address = static_cast<uint8_t *>(malloc(size));
-    } else {
-        freeBufferQueue.PopFront(*address);
-    }
 }

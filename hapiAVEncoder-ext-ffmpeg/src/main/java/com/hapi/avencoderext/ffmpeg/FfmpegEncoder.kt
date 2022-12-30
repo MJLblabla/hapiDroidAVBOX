@@ -117,8 +117,6 @@ abstract class FfmpegEncoder<T> : com.hapi.avencoder.IEncoder {
         pts: Long
     )
 
-    private external fun nativeAllocateAVFrameBuffer(nativeContext: Long, size: Int): ByteBuffer
-
     private var outputFormat: MediaFormat = MediaFormat()
     protected var info: MediaCodec.BufferInfo = MediaCodec.BufferInfo()
     private var outputBuffer: ByteBuffer? = null
@@ -180,10 +178,6 @@ abstract class FfmpegEncoder<T> : com.hapi.avencoder.IEncoder {
     private fun setByteBuffer(name: String, bytes: ByteArray) {
         outputFormat.setByteBuffer(name, ByteBuffer.wrap(bytes))
     }
-
-    override fun allocateAVFrameBuffer(size: Int): ByteBuffer {
-        return nativeAllocateAVFrameBuffer(nativeContext, size)
-    }
 }
 
 class FfmpegAudioEncoder : FfmpegEncoder<com.hapi.avencoder.AudioEncodeFrame>(), IAudioEncoder {
@@ -224,7 +218,7 @@ class FfmpegAudioEncoder : FfmpegEncoder<com.hapi.avencoder.AudioEncodeFrame>(),
             nativeContext,
             frame.buffer,
             frame.audioFormat.ffmpegFMT,
-            frame.AVChannelConfig.count,
+            frame.channelConfig.count,
             frame.sampleRateInHz,
             frame.pts
         )

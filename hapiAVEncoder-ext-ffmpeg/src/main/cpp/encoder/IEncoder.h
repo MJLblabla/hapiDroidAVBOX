@@ -11,7 +11,9 @@
 #include "unistd.h"
 #include "LogUtil.h"
 #include "BlockQueue.h"
+
 using namespace std;
+
 
 class IEncoder {
 
@@ -20,7 +22,6 @@ private:
     std::mutex mutex;
     std::condition_variable cond;
     thread *encoderThread = nullptr;
-   // void recycleByteBuffer(Frame *frame);
 
 protected:
     EncodeParam param;
@@ -29,12 +30,17 @@ protected:
     EncoderState state;
     int64_t relativelyPts = 0;
     int64_t startTimestamp = 0;
+
     virtual void startOpenCodec() = 0;
+
     virtual void encodeFrame(Frame *frame) = 0;
-    virtual void stopFlush()= 0;
+
+    virtual void stopFlush() = 0;
+
+    void allocateAVFrameBuffer(uint8_t **address, int size);
 
 public:
-    void allocateAVFrameBuffer(uint8_t **address, int size);
+
     virtual void configure(EncodeParam &encodeParam);
 
     void start();
@@ -50,8 +56,6 @@ public:
     virtual void updateBitRate(int bitRate) = 0;
 
     virtual  ~IEncoder();
-
 };
-
 
 #endif //MY_APPLICATION_IENCODER_H

@@ -81,7 +81,7 @@ void SoftEncoderContext::create(JNIEnv *env, jobject thiz, jint media_type) {
                                                      "(I)Ljava/nio/ByteBuffer;");
 
     if (media_type == 1) {
-        softEncoder = new SoftAudioEncoder();
+        softEncoder =(new SoftAudioEncoder());
         auto *e = dynamic_cast<SoftAudioEncoder *>(softEncoder);
         e->outPutCallFunc = [this, javaGetOutputBuffer, mediaFormatSetInt, mediaFormatSetLong, mediaFormatSetFloat, mediaFormatSetString, mediaFormatSetBuffer, javaOnOutputBufferAvailable](
                 int64_t pts, AVPacket *avPacket,

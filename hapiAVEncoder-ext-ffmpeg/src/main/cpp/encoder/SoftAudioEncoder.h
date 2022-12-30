@@ -17,19 +17,26 @@ private:
     AVPacket *mAVPacket = nullptr;
     int mFrameBufferSize;
     uint8_t *mFrameBuffer = nullptr;
+
     int openCodec();
+
     void clear();
+
 protected:
     void encodeFrame(Frame *frame) override;
+
     void stopFlush() override;
+
     void startOpenCodec() override;
+
 public:
     OutPutCallFunc outPutCallFunc = nullptr;
+
     void configure(EncodeParam &encodeParam) override;
+
     void updateBitRate(int bitRate) override;
+
     ~SoftAudioEncoder() override;
 };
-
-
 
 #endif //AVENCODER_SOFTAUDIOENCODER_H

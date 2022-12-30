@@ -28,11 +28,11 @@ int SoftVideoEncoder::openCodec() {
     mAVCodecCtx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
     mAVCodecCtx->codec_type = AVMEDIA_TYPE_VIDEO;
     mAVCodecCtx->codec_id = mAVCodec->id;
-    mAVCodecCtx->max_b_frames=0;
+    mAVCodecCtx->max_b_frames = 0;
 
     mAVCodecCtx->bit_rate = param.videoBitRate;
     //VBR
-     mAVCodecCtx->flags |= AV_CODEC_FLAG_QSCALE;
+    mAVCodecCtx->flags |= AV_CODEC_FLAG_QSCALE;
     mAVCodecCtx->rc_min_rate = param.videoMinBitRate;
     mAVCodecCtx->rc_max_rate = param.videoMaxBitRate;
     mAVCodecCtx->bit_rate_tolerance = 1;
@@ -46,7 +46,7 @@ int SoftVideoEncoder::openCodec() {
         mAVCodecCtx->thread_count = param.threadCount;
     }
     av_opt_set(mAVCodecCtx->priv_data, "preset", "veryfast", 0);
-  //  av_opt_set(mAVCodecCtx->priv_data, "tune", "zerolatency", 0);
+    //  av_opt_set(mAVCodecCtx->priv_data, "tune", "zerolatency", 0);
 
     int ret = 0;
     ret = avcodec_open2(mAVCodecCtx, mAVCodec, nullptr);
@@ -63,16 +63,14 @@ void SoftVideoEncoder::startOpenCodec() {
 }
 
 void SoftVideoEncoder::encodeFrame(Frame *frame) {
-    // LOGCATE("SoftVideoEncoder::EncodeVideoFrame video avcodec_receive_packet fail. ret=%s",)
-    auto videoFrame = reinterpret_cast<VideoFrame *>(frame);
-    if (videoFrame != nullptr) {
-        mAVFrame->data[0] = videoFrame->data;
+    if (frame) {
+        mAVFrame->data[0] = frame->data;
         mAVFrame->data[1] = mAVFrame->data[0] + mAVFrame->width * mAVFrame->height;
         mAVFrame->data[2] = mAVFrame->data[1] + mAVFrame->width / 2 * mAVFrame->height / 2;
         mAVFrame->linesize[0] = mAVFrame->width;
         mAVFrame->linesize[1] = mAVFrame->width / 2;
         mAVFrame->linesize[2] = mAVFrame->width / 2;
-        mAVFrame->pts = videoFrame->pts;
+        mAVFrame->pts = frame->pts;
         int ret = avcodec_send_frame(mAVCodecCtx, mAVFrame);
         //  LOGCATE("encodeFrame  avcodec_send_frame---pts- %lld  %d", mAVFrame->pts,frameQueue.Size());
     } else {
@@ -92,7 +90,7 @@ void SoftVideoEncoder::encodeFrame(Frame *frame) {
                     av_err2str(ret));
             goto EXIT;
         }
-      //  int64_t outPts = av_rescale_q(mAVPacket->pts, mAVCodecCtx->time_base, AV_TIME_BASE_Q);
+        //  int64_t outPts = av_rescale_q(mAVPacket->pts, mAVCodecCtx->time_base, AV_TIME_BASE_Q);
         if (outPutCallFunc != nullptr) {
             outPutCallFunc(mAVPacket->pts, mAVPacket, mAVCodecCtx);
         }

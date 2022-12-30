@@ -23,7 +23,7 @@ fun VideoFrame.toVideoEncodeFrame(): VideoEncodeFrame {
 fun AudioFrame.toAudioEncodeFrame(silence: Boolean = false): AudioEncodeFrame {
     return AudioEncodeFrame(
         sampleRateInHz = this.sampleRateInHz,
-        AVChannelConfig = this.AVChannelConfig,
+        channelConfig = this.AVChannelConfig,
         audioFormat = this.audioFormat,
         buffer = if (silence) {
             ByteBuffer.allocateDirect(this.data.limit() - this.data.position())

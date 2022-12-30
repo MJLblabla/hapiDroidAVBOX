@@ -53,8 +53,7 @@ int SoftAudioEncoder::openCodec() {
 
 void SoftAudioEncoder::encodeFrame(Frame *frame) {
     if (frame != nullptr) {
-        auto audioFrame = reinterpret_cast<const AudioFrame *>(frame);
-        mAVFrame->data[0] = audioFrame->data;
+        mAVFrame->data[0] = frame->data;
         mAVFrame->pts = frame->pts;
         //  relativelyPts += mAVFrame->nb_samples;
         int ret = avcodec_send_frame(mAVCodecCtx, mAVFrame);
@@ -117,7 +116,6 @@ void SoftAudioEncoder::stopFlush() {
 void SoftAudioEncoder::updateBitRate(int bitRate) {
 
 }
-
 SoftAudioEncoder::~SoftAudioEncoder() {
     outPutCallFunc = nullptr;
     clear();

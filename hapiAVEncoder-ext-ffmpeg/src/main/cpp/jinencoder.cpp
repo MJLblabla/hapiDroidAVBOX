@@ -8,6 +8,17 @@
 #include "SoftVideoEncoder.h"
 #include "jni/SoftEncoderContext.h"
 
+
+extern "C"
+JNIEXPORT jlong JNICALL
+Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeCreate(JNIEnv *env, jobject thiz,
+                                                             jint media_type) {
+
+    auto encoderContext = new SoftEncoderContext();
+    encoderContext->create(env, thiz, media_type);
+    return reinterpret_cast<jlong>(encoderContext);
+}
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeStart(JNIEnv *env, jobject thiz,
@@ -57,14 +68,6 @@ Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeRelease(JNIEnv *env, jobje
 }
 
 extern "C"
-JNIEXPORT jlong JNICALL
-Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeCreate(JNIEnv *env, jobject thiz,
-                                                             jint media_type) {
-    auto encoderContext = new SoftEncoderContext();
-    encoderContext->create(env, thiz, media_type);
-    return reinterpret_cast<jlong>(encoderContext);
-}
-extern "C"
 JNIEXPORT void JNICALL
 Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeOnAudioFrame(JNIEnv *env, jobject thiz,
                                                                    jlong native_context,
@@ -77,7 +80,7 @@ Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeOnAudioFrame(JNIEnv *env, 
     auto *c_array = reinterpret_cast<jbyte *>(env->GetDirectBufferAddress(
             data));
     jlong len_arr = env->GetDirectBufferCapacity(data);
-    AudioFrame audioFrame ;
+    Frame audioFrame;
     audioFrame.dataSize = len_arr;
     audioFrame.data = reinterpret_cast<uint8_t *>(c_array);
     audioFrame.out_sample_fmt = AVSampleFormat(sample_fmt);
@@ -85,7 +88,7 @@ Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeOnAudioFrame(JNIEnv *env, 
     audioFrame.setChannel(audio_channel_count);
     audioFrame.pts = pts;
     encoder->softEncoder->onFrame(audioFrame);
-
+    audioFrame.data = nullptr;
 }
 
 extern "C"
@@ -101,7 +104,7 @@ Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeOnVideoFrame(JNIEnv *env, 
 
     auto *c_array = reinterpret_cast<jbyte *>(env->GetDirectBufferAddress(data));
     jlong len_arr = env->GetDirectBufferCapacity(data);
-    VideoFrame videoFrame;
+    Frame videoFrame;
     videoFrame.dataSize = len_arr;
     videoFrame.data = reinterpret_cast<uint8_t *>(c_array);
     videoFrame.width = width;
@@ -110,19 +113,8 @@ Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeOnVideoFrame(JNIEnv *env, 
     videoFrame.frameTimestamp = frame_timestamp;
     videoFrame.pts = pts;
     encoder->softEncoder->onFrame(videoFrame);
+    videoFrame.data = nullptr;
 }
-extern "C"
-JNIEXPORT jobject JNICALL
-Java_com_hapi_avencoderext_ffmpeg_FfmpegEncoder_nativeAllocateAVFrameBuffer(JNIEnv *env,
-                                                                            jobject thiz,
-                                                                            jlong native_context,
-                                                                            jint size) {
-    auto encoder = reinterpret_cast<SoftEncoderContext *> (native_context);
-    uint8_t *data = nullptr;
-    encoder->softEncoder->allocateAVFrameBuffer(&data, size);
-    return env->NewDirectByteBuffer(data, size);
-}
-
 
 extern "C"
 JNIEXPORT void JNICALL

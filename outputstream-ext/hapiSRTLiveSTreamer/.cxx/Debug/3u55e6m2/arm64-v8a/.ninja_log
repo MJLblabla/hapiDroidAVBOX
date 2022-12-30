@@ -16,3 +16,16 @@
 2	981	1672296513	CMakeFiles/srtmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnection.cpp.o	8ad744434d167f18
 3	1009	1672296513	CMakeFiles/srtmuxer.dir/srtmuxer.cpp.o	17af167b35c28cfa
 1009	1182	1672296513	/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/hapiSRTLiveSTreamer/build/intermediates/cxx/Debug/3u55e6m2/obj/arm64-v8a/libsrtmuxer.so	ba813ce39bcf72e7
+0	9	0	clean	5430a8c815a28d05
+2	286	1672388585	CMakeFiles/srtmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnectionJNICaller.cpp.o	43c2d18cddc325bb
+2	369	1672388585	CMakeFiles/srtmuxer.dir/srt/SrtLiveConnection.cpp.o	5bb07c5c335c662
+1	389	1672388585	CMakeFiles/srtmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnection.cpp.o	8ad744434d167f18
+2	458	1672388585	CMakeFiles/srtmuxer.dir/srtmuxer.cpp.o	17af167b35c28cfa
+458	525	1672388586	/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/hapiSRTLiveSTreamer/build/intermediates/cxx/Debug/3u55e6m2/obj/arm64-v8a/libsrtmuxer.so	ba813ce39bcf72e7
+0	9	0	clean	5430a8c815a28d05
+0	9	0	clean	5430a8c815a28d05
+2	387	1672390040	CMakeFiles/srtmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnectionJNICaller.cpp.o	43c2d18cddc325bb
+2	466	1672390040	CMakeFiles/srtmuxer.dir/srt/SrtLiveConnection.cpp.o	5bb07c5c335c662
+1	513	1672390040	CMakeFiles/srtmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnection.cpp.o	8ad744434d167f18
+3	595	1672390040	CMakeFiles/srtmuxer.dir/srtmuxer.cpp.o	17af167b35c28cfa
+595	677	1672390040	/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/hapiSRTLiveSTreamer/build/intermediates/cxx/Debug/3u55e6m2/obj/arm64-v8a/libsrtmuxer.so	ba813ce39bcf72e7

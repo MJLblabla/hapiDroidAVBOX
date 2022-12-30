@@ -54,6 +54,5 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btConstom).setOnClickListener {
             startActivity(Intent(this, CustomTrackTestActivity::class.java))
         }
-
     }
 }

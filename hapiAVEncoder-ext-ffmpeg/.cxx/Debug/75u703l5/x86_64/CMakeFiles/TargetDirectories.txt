@@ -1,3 +1,0 @@
-/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/.cxx/Debug/75u703l5/x86_64/CMakeFiles/rebuild_cache.dir
-/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/.cxx/Debug/75u703l5/x86_64/CMakeFiles/edit_cache.dir
-/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/.cxx/Debug/75u703l5/x86_64/CMakeFiles/avencoderffmpeg.dir
