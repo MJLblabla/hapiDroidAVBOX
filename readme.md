@@ -1,6 +1,6 @@
 ### 项目描述
 
-![alt 属性文本](https://github.com/MJLblabla/hapiDroidAVBOX/blob/master/hapi.png?raw=true)
+![alt 属性文本](http://qrnlrydxa.hn-bkt.clouddn.com/doc/hapi.png)
 
 ### 依赖
 
