@@ -105,5 +105,5 @@ recordClient.start(recordUrl)
 ### 高级功能
 
 ### 美颜
-
+https://github.com/MJLblabla/PixelFreeEffects
 ### 图像ai
