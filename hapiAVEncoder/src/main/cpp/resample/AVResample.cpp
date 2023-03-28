@@ -230,7 +230,7 @@ void AVResample::onFrame2Encode(VideoFrame *inputFrame, VideoFrame *resizeInputF
                 rotate_yuv_temp, roteW,
                 rotate_yuv_temp + src_y_size, roteW / 2,
                 rotate_yuv_temp + src_y_size + src_u_size, roteW / 2,
-                roteW, roteH, mode
+                widthsrc, heightsrc, mode
         );
         widthsrc = roteW;
         heightsrc = roteH;

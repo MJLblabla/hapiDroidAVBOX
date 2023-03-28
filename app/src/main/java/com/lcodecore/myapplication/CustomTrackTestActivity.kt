@@ -20,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
+import java.nio.ByteBuffer
 
 class CustomTrackTestActivity : AppCompatActivity() {
 
@@ -52,33 +53,25 @@ class CustomTrackTestActivity : AppCompatActivity() {
         HapiAVPackerClient()
     }
 
+
     private fun start() {
         val bm = BitmapFactory.decodeResource(resources, R.mipmap.aaas)
-        customTrack.runOnGLThread {
-            TextureUtils.init()
-            TextureUtils.loadTexture(bm)
-        }
-        val f16Matrix: FloatArray = arrayOf<Float>(
-            1f, 0f, 0f, 0f,
-            0f, 1f, 0f, 0f,
-            0f, 0f, 1f, 0f,
-            0f, 0f, 0f, 1f,
-        ).toFloatArray()
-      //  Matrix.setRotateM(f16Matrix, 0, 360f - 90, 0f, 0f, 1.0f)
+        val nv21 = ImageUtils.bitmapToNv21(bm,bm.width,bm.height)
+
+        //  Matrix.setRotateM(f16Matrix, 0, 360f - 90, 0f, 0f, 1.0f)
         lifecycleScope.launch(Dispatchers.IO) {
             while (true) {
-                delay(1000)
+                delay(100)
                 customTrack.runOnGLThread {
+                    val bb = ByteBuffer.allocateDirect(nv21.size)
+                    bb.put(nv21)
+                    bb.rewind()
                     customTrack.pushFrame(
                         VideoFrame(
                             bm.width,
                             bm.height,
-                            0,
-                            VideoFrame.TextureBuffer(
-                                TextureUtils.textureIds[0],
-                                f16Matrix,
-                                AVImgFmt.IMAGE_FORMAT_TEXTURE_2D
-                            )
+                            270,
+                            VideoFrame.ImgBuffer(bb, AVImgFmt.IMAGE_FORMAT_NV21)
                         )
                     )
                 }
@@ -89,6 +82,7 @@ class CustomTrackTestActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi")
     fun stop() {
         customTrack.stop()
+        recordClient.stop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,5 +147,8 @@ class CustomTrackTestActivity : AppCompatActivity() {
         stop()
         customTrack.release()
     }
+
+
+
 
 }
