@@ -92,7 +92,7 @@ void SoftVideoEncoder::encodeFrame(Frame *frame) {
         }
         //  int64_t outPts = av_rescale_q(mAVPacket->pts, mAVCodecCtx->time_base, AV_TIME_BASE_Q);
         if (outPutCallFunc != nullptr) {
-            outPutCallFunc(mAVPacket->pts, mAVPacket, mAVCodecCtx);
+            outPutCallFunc(mAVPacket, mAVCodecCtx);
         }
     }
     EXIT:

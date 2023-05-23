@@ -22,7 +22,7 @@ private:
 
     static void callJavaOutPut(bool isH264, JNIEnv *env, jobject thiz, jmethodID getOutPut,
                                jmethodID callOnOutput,
-                               uint8_t *data, int size, int64_t pts, int flag);
+                               uint8_t *data, int size, int64_t pts, int flag,int64_t dts);
 
 public:
     IEncoder *softEncoder = nullptr;

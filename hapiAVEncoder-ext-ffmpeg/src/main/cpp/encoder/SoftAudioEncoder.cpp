@@ -76,7 +76,7 @@ void SoftAudioEncoder::encodeFrame(Frame *frame) {
         }
         // int64_t pts = av_rescale_q(mAVPacket->pts, mAVCodecCtx->time_base, AV_TIME_BASE_Q);
         if (outPutCallFunc != nullptr) {
-            outPutCallFunc(mAVPacket->pts, mAVPacket, mAVCodecCtx);
+            outPutCallFunc(mAVPacket, mAVCodecCtx);
         }
     }
     EXIT:
@@ -116,6 +116,7 @@ void SoftAudioEncoder::stopFlush() {
 void SoftAudioEncoder::updateBitRate(int bitRate) {
 
 }
+
 SoftAudioEncoder::~SoftAudioEncoder() {
     outPutCallFunc = nullptr;
     clear();

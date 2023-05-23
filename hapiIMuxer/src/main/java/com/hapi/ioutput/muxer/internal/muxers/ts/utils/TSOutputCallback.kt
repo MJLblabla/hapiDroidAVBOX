@@ -15,11 +15,11 @@
  */
 package com.hapi.ioutput.muxer.internal.muxers.ts.utils
 
-import com.hapi.ioutput.muxer.internal.data.Packet
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 import com.hapi.ioutput.muxer.internal.muxers.IMuxerListener
 
 open class TSOutputCallback(var listener: IMuxerListener? = null) {
-    protected fun writePacket(packet: Packet) {
+    protected fun writePacket(packet: FormatPacket) {
         packet.buffer.rewind()
         listener?.onOutputFrame(packet)
     }

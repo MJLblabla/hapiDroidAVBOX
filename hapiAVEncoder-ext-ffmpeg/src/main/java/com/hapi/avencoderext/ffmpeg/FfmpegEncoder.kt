@@ -30,7 +30,7 @@ abstract class FfmpegEncoder<T> : com.hapi.avencoder.IEncoder {
                     )
                 }
                 //Return the number of cores (virtual CPU devices)
-                Math.max((files?.size ?: 2)/2 ,1)
+                Math.max((files?.size ?: 2) / 2, 1)
             } catch (e: Exception) {
                 //Default to return 1 core
                 1
@@ -147,7 +147,7 @@ abstract class FfmpegEncoder<T> : com.hapi.avencoder.IEncoder {
         return outputBuffer!!
     }
 
-    private fun onOutputBufferAvailable(newSize: Int, newTimeUs: Long, newFlags: Int) {
+    public fun onOutputBufferAvailable(newSize: Int, newTimeUs: Long, newFlags: Int, dts: Long) {
         info.set(0, newSize, newTimeUs, newFlags)
         outputBuffer?.position(0)
         outputBuffer?.limit(newSize)
@@ -156,7 +156,7 @@ abstract class FfmpegEncoder<T> : com.hapi.avencoder.IEncoder {
             encoderCallBack?.onOutputFormatChanged(outputFormat)
         }
         lastMediaFormatKey = currentKey
-        encoderCallBack?.onOutputBufferAvailable(outputBuffer!!, outputFormat, info)
+        encoderCallBack?.onOutputBufferAvailable(outputBuffer!!, outputFormat, info, dts)
     }
 
     private fun setInteger(name: String, value: Int) {

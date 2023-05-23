@@ -19,20 +19,13 @@ import java.nio.ByteBuffer
 
 /**
  * Packet internal representation.
- * A [Frame] is composed by multiple packets.
+ * A [AVPacket] is composed by multiple packets.
  */
-
-enum class PacketType
-open class Packet(
+open class FormatPacket(
     /**
      * Contains data.
      */
     var buffer: ByteBuffer,
-
-    /**
-     * Frame timestamp in µs.
-     */
-    var ts: Long, // in µs
 ) {
     /**
      * [Boolean.true] if this is the first packet that describes a frame.

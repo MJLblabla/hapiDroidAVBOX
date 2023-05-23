@@ -16,7 +16,7 @@ void SoftEncoderContext::resetFirstFrameFlag() {
 
 void SoftEncoderContext::callJavaOutPut(bool isH264, JNIEnv *env, jobject jobj, jmethodID getOutPut,
                                         jmethodID callOnOutput, uint8_t *data, int size,
-                                        int64_t pts, int flag) {
+                                        int64_t pts, int flag, int64_t dts) {
 
     auto startTime = GetSysCurrentTimeNS();
     if (isH264) {
@@ -34,22 +34,22 @@ void SoftEncoderContext::callJavaOutPut(bool isH264, JNIEnv *env, jobject jobj, 
             auto *const dataBuffer = reinterpret_cast<jbyte *>(env->GetDirectBufferAddress(
                     dataObject));
             memcpy(dataBuffer + 1, data, size);
-            env->CallVoidMethod(jobj, callOnOutput, size + 1, pts, flag);
+            env->CallVoidMethod(jobj, callOnOutput, size + 1, pts, flag, dts);
         } else {
             auto dataObject = env->CallObjectMethod(jobj, getOutPut, size);
             auto *const dataBuffer = reinterpret_cast<jbyte *>(env->GetDirectBufferAddress(
                     dataObject));
             memcpy(dataBuffer, data, size);
-            env->CallVoidMethod(jobj, callOnOutput, size, pts, flag);
+            env->CallVoidMethod(jobj, callOnOutput, size, pts, flag, dts);
         }
     } else {
         auto dataObject = env->CallObjectMethod(jobj, getOutPut, size);
         auto *const dataBuffer = reinterpret_cast<jbyte *>(env->GetDirectBufferAddress(dataObject));
         memcpy(dataBuffer, data, size);
-        env->CallVoidMethod(jobj, callOnOutput, size, pts, flag);
+        env->CallVoidMethod(jobj, callOnOutput, size, pts, flag, dts);
     }
     auto endTime = GetSysCurrentTimeNS();
-   //LOGCATE("  callJavaOutPut  cost %lld ", endTime - startTime);
+    //LOGCATE("  callJavaOutPut  cost %lld ", endTime - startTime);
 
 }
 
@@ -74,17 +74,17 @@ void SoftEncoderContext::create(JNIEnv *env, jobject thiz, jint media_type) {
 
     jmethodID javaOnOutputBufferAvailable = env->GetMethodID(env->GetObjectClass(mJavaObj),
                                                              "onOutputBufferAvailable",
-                                                             "(IJI)V");
+                                                             "(IJIJ)V");
 
     jmethodID javaGetOutputBuffer = env->GetMethodID(env->GetObjectClass(mJavaObj),
                                                      "getOutputBuffer",
                                                      "(I)Ljava/nio/ByteBuffer;");
 
     if (media_type == 1) {
-        softEncoder =(new SoftAudioEncoder());
+        softEncoder = (new SoftAudioEncoder());
         auto *e = dynamic_cast<SoftAudioEncoder *>(softEncoder);
         e->outPutCallFunc = [this, javaGetOutputBuffer, mediaFormatSetInt, mediaFormatSetLong, mediaFormatSetFloat, mediaFormatSetString, mediaFormatSetBuffer, javaOnOutputBufferAvailable](
-                int64_t pts, AVPacket *avPacket,
+                AVPacket *avPacket,
                 AVCodecContext *codecParameters) {
             bool isAttach = false;
             JNIEnv *env = this->getJNIEnv(&isAttach);
@@ -129,7 +129,7 @@ void SoftEncoderContext::create(JNIEnv *env, jobject thiz, jint media_type) {
                 this->callJavaOutPut(false, env, this->mJavaObj, javaGetOutputBuffer,
                                      javaOnOutputBufferAvailable,
                                      codecParameters->extradata, codecParameters->extradata_size, 0,
-                                     2);
+                                     2, 0);
 
                 env->DeleteLocalRef(keyCsd0);
                 env->DeleteLocalRef(keyMaxBitrate);
@@ -147,7 +147,8 @@ void SoftEncoderContext::create(JNIEnv *env, jobject thiz, jint media_type) {
             }
             this->callJavaOutPut(false, env, this->mJavaObj, javaGetOutputBuffer,
                                  javaOnOutputBufferAvailable,
-                                 avPacket->data, avPacket->size, pts, flag);
+                                 avPacket->data, avPacket->size, avPacket->pts, flag,
+                                 avPacket->dts);
             if (isAttach)
                 this->mJavaVM->DetachCurrentThread();
         };
@@ -155,7 +156,7 @@ void SoftEncoderContext::create(JNIEnv *env, jobject thiz, jint media_type) {
         softEncoder = new SoftVideoEncoder();
         auto *e = dynamic_cast<SoftVideoEncoder *>(softEncoder);
         e->outPutCallFunc = [this, javaGetOutputBuffer, mediaFormatSetInt, mediaFormatSetLong, mediaFormatSetFloat, mediaFormatSetString, mediaFormatSetBuffer, javaOnOutputBufferAvailable](
-                int64_t pts, AVPacket *avPacket,
+                 AVPacket *avPacket,
                 AVCodecContext *codecParameters) {
             bool isAttach = false;
             JNIEnv *env = this->getJNIEnv(&isAttach);
@@ -228,7 +229,7 @@ void SoftEncoderContext::create(JNIEnv *env, jobject thiz, jint media_type) {
                 this->callJavaOutPut(true, env, this->mJavaObj, javaGetOutputBuffer,
                                      javaOnOutputBufferAvailable,
                                      codecParameters->extradata, codecParameters->extradata_size, 0,
-                                     2);
+                                     2, 0);
 
                 env->DeleteLocalRef(spsArray);
                 env->DeleteLocalRef(keyCsd0);
@@ -252,7 +253,8 @@ void SoftEncoderContext::create(JNIEnv *env, jobject thiz, jint media_type) {
 
             this->callJavaOutPut(true, env, this->mJavaObj, javaGetOutputBuffer,
                                  javaOnOutputBufferAvailable,
-                                 avPacket->data, avPacket->size, pts, flag);
+                                 avPacket->data, avPacket->size, avPacket->pts, flag,
+                                 avPacket->dts);
 
             if (isAttach)
                 this->mJavaVM->DetachCurrentThread();

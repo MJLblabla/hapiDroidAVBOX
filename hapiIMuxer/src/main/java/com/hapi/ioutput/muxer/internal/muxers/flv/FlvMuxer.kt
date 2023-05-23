@@ -16,14 +16,12 @@
 package com.hapi.ioutput.muxer.internal.muxers.flv
 
 import android.media.MediaFormat
-import com.hapi.ioutput.muxer.internal.data.Frame
-import com.hapi.ioutput.muxer.internal.data.Packet
+import com.hapi.ioutput.muxer.internal.data.AVPacket
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 import com.hapi.ioutput.muxer.internal.muxers.IMuxer
 import com.hapi.ioutput.muxer.internal.muxers.IMuxerListener
 import com.hapi.ioutput.muxer.internal.muxers.flv.packet.FlvHeader
 import com.hapi.ioutput.muxer.internal.muxers.flv.packet.FlvTagFactory
-import com.hapi.ioutput.muxer.internal.muxers.flv.packet.OnMetadata
-import com.hapi.ioutput.muxer.internal.muxers.ts.utils.TimeUtils
 import com.hapi.ioutput.muxer.internal.utils.isAudio
 import com.hapi.ioutput.muxer.internal.utils.isVideo
 import java.util.LinkedList
@@ -50,7 +48,7 @@ class FlvMuxer(
 
     override var manageVideoOrientation: Boolean = false
 
-    override fun encode(frame: Frame, streamPid: Int) {
+    override fun encode(avPacket: AVPacket, streamPid: Int) {
         if (!hasFirstFrame) {
             hasFirstFrame = true
             // Metadata
@@ -61,9 +59,9 @@ class FlvMuxer(
 //                )
 //            )
         }
-        val flvTags = FlvTagFactory(frame, true, findMediaFormatByID(streamPid)).build()
+        val flvTags = FlvTagFactory(avPacket, true, findMediaFormatByID(streamPid)).build()
         flvTags.forEach {
-            listener?.onOutputFrame(Packet(it.write(), frame.pts))
+            listener?.onOutputFrame(FormatPacket(it.write()))
         }
     }
 
@@ -100,9 +98,8 @@ class FlvMuxer(
         // Header
         if (writeToFile) {
             listener?.onOutputFrame(
-                Packet(
-                    FlvHeader(hasAudio, hasVideo).write(),
-                    0
+                FormatPacket(
+                    FlvHeader(hasAudio, hasVideo).write()
                 )
             )
         }

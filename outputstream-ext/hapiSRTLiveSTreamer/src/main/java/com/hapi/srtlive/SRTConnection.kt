@@ -3,7 +3,7 @@ package com.hapi.srtlive
 import android.net.Uri
 import com.hapi.ioutput.IConnection
 import com.hapi.ioutput.MediaStreamList
-import com.hapi.ioutput.muxer.internal.data.Packet
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 import com.hapi.srtlive.mode.Boundary
 import com.hapi.srtlive.mode.MsgCtrl
 import com.hapi.srtlive.mode.SRTConfig
@@ -71,7 +71,7 @@ class SRTConnection : IConnection() {
 
     }
 
-    override fun sendPacket(packet: Packet) {
+    override fun sendPacket(packet: FormatPacket) {
         val boundary = when {
             packet.isFirstPacketFrame && packet.isLastPacketFrame -> Boundary.SOLO
             packet.isFirstPacketFrame -> Boundary.FIRST

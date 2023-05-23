@@ -15,7 +15,7 @@
  */
 package com.hapi.ioutput.muxer.internal.muxers.ts.utils
 
-import com.hapi.ioutput.muxer.internal.data.Packet
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 import com.hapi.ioutput.muxer.internal.muxers.IMuxerListener
 
 object MuxerConst {
@@ -23,7 +23,7 @@ object MuxerConst {
     const val SDT_PACKET_PERIOD = 200
 
     /**
-     * Number of MPEG-TS packet stream in output [Packet] returns by [IMuxerListener.onOutputFrame]
+     * Number of MPEG-TS packet stream in output [FormatPacket] returns by [IMuxerListener.onOutputFrame]
      */
     const val MAX_OUTPUT_PACKET_NUMBER = 7
 }

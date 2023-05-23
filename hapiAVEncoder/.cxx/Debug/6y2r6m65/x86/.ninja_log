@@ -49,3 +49,15 @@
 0	10	0	clean	5430a8c815a28d05
 0	17	0	clean	5430a8c815a28d05
 0	10	0	clean	5430a8c815a28d05
+2	128	1684829029	CMakeFiles/avencoder.dir/resample/AVResample.cpp.o	c6a1e2cdc5a15ca9
+1	236	1684829029	CMakeFiles/avencoder.dir/jinresample.cpp.o	2fc8691a9fd4d935
+236	313	1684829029	/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/build/intermediates/cxx/Debug/6y2r6m65/obj/x86/libavencoder.so	55afb44d570e09c1
+0	10	0	clean	5430a8c815a28d05
+2	120	1684829408	CMakeFiles/avencoder.dir/resample/AVResample.cpp.o	c6a1e2cdc5a15ca9
+1	227	1684829408	CMakeFiles/avencoder.dir/jinresample.cpp.o	2fc8691a9fd4d935
+227	301	1684829408	/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/build/intermediates/cxx/Debug/6y2r6m65/obj/x86/libavencoder.so	55afb44d570e09c1
+0	12	0	clean	5430a8c815a28d05
+1	121	1684829999	CMakeFiles/avencoder.dir/resample/AVResample.cpp.o	c6a1e2cdc5a15ca9
+1	226	1684829999	CMakeFiles/avencoder.dir/jinresample.cpp.o	2fc8691a9fd4d935
+226	301	1684829999	/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder/build/intermediates/cxx/Debug/6y2r6m65/obj/x86/libavencoder.so	55afb44d570e09c1
+0	8	0	clean	5430a8c815a28d05

@@ -25,12 +25,12 @@ import java.io.IOException
 import java.nio.ByteBuffer
 
 class AudioTag(
-    pts: Long,
+    pts: Long,dts:Long,
     private val frameBuffer: ByteBuffer,
     private val isSequenceHeader: Boolean = false,
     private val audioConfig: MediaFormat
 ) :
-    FlvTag(pts, TagType.AUDIO) {
+    FlvTag(dts, TagType.AUDIO) {
     companion object {
         private const val AUDIO_TAG_HEADER_SIZE = 1
     }

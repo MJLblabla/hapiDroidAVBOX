@@ -19,6 +19,7 @@ interface StreamObserver {
         trackStreamID: String,
         outputBuffer: ByteBuffer,
         outputFormat: MediaFormat,
-        info: MediaCodec.BufferInfo
+        info: MediaCodec.BufferInfo,
+        dts: Long
     )
 }

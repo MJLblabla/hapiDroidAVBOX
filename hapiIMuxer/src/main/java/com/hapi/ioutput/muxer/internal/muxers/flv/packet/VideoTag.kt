@@ -26,20 +26,20 @@ import java.io.IOException
 import java.nio.ByteBuffer
 
 class VideoTag(
-    pts: Long,
+    private val pts: Long,dts:Long,
     private val buffers: List<ByteBuffer>,
     private val isKeyFrame: Boolean,
     private val isSequenceHeader: Boolean = false,
     private val videoConfig: MediaFormat
 ) :
-    FlvTag(pts, TagType.VIDEO) {
+    FlvTag(dts, TagType.VIDEO) {
     constructor(
-        pts: Long,
+        pts: Long,dts:Long,
         buffer: ByteBuffer,
         isKeyFrame: Boolean,
         isSequenceHeader: Boolean = false,
         videoConfig: MediaFormat
-    ) : this(pts, listOf(buffer), isKeyFrame, isSequenceHeader, videoConfig)
+    ) : this(pts,dts, listOf(buffer), isKeyFrame, isSequenceHeader, videoConfig)
 
     companion object {
         private const val VIDEO_TAG_HEADER_SIZE = 1
@@ -80,7 +80,7 @@ class VideoTag(
             } else {
                 buffer.put(AVCPacketType.NALU.value) // AVC NALU
             }
-            buffer.putInt24(0) // TODO: CompositionTime
+            buffer.putInt24(pts.toInt())
         }
     }
 

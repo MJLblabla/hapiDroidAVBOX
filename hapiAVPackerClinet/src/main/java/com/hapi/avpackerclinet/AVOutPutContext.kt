@@ -37,9 +37,10 @@ class AVOutPutContext : OutputStreamer() {
         trackStreamID: String,
         outputBuffer: ByteBuffer,
         outputFormat: MediaFormat,
-        info: MediaCodec.BufferInfo
+        info: MediaCodec.BufferInfo,
+        dts: Long
     ) {
-        mOutputStreamer?.writePacket(trackStreamID, outputBuffer, outputFormat, info)
+        mOutputStreamer?.writePacket(trackStreamID, outputBuffer, outputFormat, info, dts)
     }
 
     override fun close() {

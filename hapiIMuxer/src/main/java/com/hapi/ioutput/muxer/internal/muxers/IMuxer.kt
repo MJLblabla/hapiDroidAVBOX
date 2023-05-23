@@ -16,7 +16,7 @@
 package com.hapi.ioutput.muxer.internal.muxers
 
 import android.media.MediaFormat
-import com.hapi.ioutput.muxer.internal.data.Frame
+import com.hapi.ioutput.muxer.internal.data.AVPacket
 import com.hapi.ioutput.muxer.internal.interfaces.Streamable
 
 interface IMuxer : Streamable<Unit> {
@@ -24,7 +24,7 @@ interface IMuxer : Streamable<Unit> {
     var manageVideoOrientation: Boolean
     var listener: IMuxerListener?
 
-    fun encode(frame: Frame, streamPid: Int)
+    fun encode(avPacket: AVPacket, streamPid: Int)
     fun addStreams(streamsConfig: List<MediaFormat>): Map<MediaFormat, Int>
     fun removeStreams(streamsPid: List<Int>)
 }

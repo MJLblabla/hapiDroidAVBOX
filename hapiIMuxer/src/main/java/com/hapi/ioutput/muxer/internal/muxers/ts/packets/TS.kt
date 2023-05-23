@@ -15,7 +15,7 @@
  */
 package com.hapi.ioutput.muxer.internal.muxers.ts.packets
 
-import com.hapi.ioutput.muxer.internal.data.Packet
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 import com.hapi.ioutput.muxer.internal.muxers.IMuxerListener
 import com.hapi.ioutput.muxer.internal.muxers.ts.utils.MuxerConst
 import com.hapi.ioutput.muxer.internal.muxers.ts.utils.TSOutputCallback
@@ -129,9 +129,8 @@ open class TS(
             val isLastPacket = payload?.let { !it.hasRemaining() } ?: true
             if (buffer.limit() == buffer.capacity() || isLastPacket) {
                 writePacket(
-                    Packet(
-                        buffer,
-                        timestamp
+                    FormatPacket(
+                        buffer
                     ).apply {
                         this.isFirstPacketFrame = packetIndicator == 0
                         this.isLastPacketFrame = isLastPacket

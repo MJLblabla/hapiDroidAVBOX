@@ -1,6 +1,6 @@
 package com.hapi.ioutput
 
-import com.hapi.ioutput.muxer.internal.data.Packet
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ abstract class IConnection {
     }
 
     abstract fun open(url: String, mediaStreamList: MediaStreamList)
-    abstract fun sendPacket(packet: Packet)
+    abstract fun sendPacket(packet: FormatPacket)
     abstract fun close()
     abstract fun release()
 }

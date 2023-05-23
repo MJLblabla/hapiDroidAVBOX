@@ -10,5 +10,10 @@ interface EncoderStatusCallBack {
 
 interface EncoderCallBack : EncoderStatusCallBack {
     fun onOutputFormatChanged(mediaFormat: MediaFormat) {}
-    fun onOutputBufferAvailable(outputBuffer: ByteBuffer, outputFormat: MediaFormat, info: MediaCodec.BufferInfo)
+    fun onOutputBufferAvailable(
+        outputBuffer: ByteBuffer,
+        outputFormat: MediaFormat,
+        info: MediaCodec.BufferInfo,
+        dts: Long
+    )
 }

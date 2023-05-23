@@ -11,7 +11,7 @@ extern "C"
 }
 using namespace std;
 
-typedef std::function<void(int64_t, AVPacket *, AVCodecContext *)> OutPutCallFunc;
+typedef std::function<void(AVPacket *, AVCodecContext *)> OutPutCallFunc;
 
 
 

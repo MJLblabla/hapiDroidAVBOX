@@ -1,0 +1,3 @@
+/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/.cxx/Debug/75u703l5/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/.cxx/Debug/75u703l5/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/manjiale/dev/hapiDroidAVBOX/hapiAVEncoder-ext-ffmpeg/.cxx/Debug/75u703l5/armeabi-v7a/CMakeFiles/avencoderffmpeg.dir

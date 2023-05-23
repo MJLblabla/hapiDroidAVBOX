@@ -16,7 +16,7 @@
 package com.hapi.ioutput.muxer.internal.muxers.ts.packets
 
 import android.media.MediaFormat
-import com.hapi.ioutput.muxer.internal.data.Frame
+import com.hapi.ioutput.muxer.internal.data.AVPacket
 import com.hapi.ioutput.muxer.internal.muxers.IMuxerListener
 import com.hapi.ioutput.muxer.internal.muxers.ts.data.Stream
 import com.hapi.ioutput.muxer.internal.muxers.ts.descriptors.AdaptationField
@@ -30,7 +30,7 @@ class Pes(
     val stream: Stream,
     private val hasPcr: Boolean,
 ) : TS(muxerListener, stream.pid) {
-    fun write(frame: Frame) {
+    fun write(frame: AVPacket) {
         val programClockReference = if (hasPcr) {
             TimeUtils.currentTime()
         } else {

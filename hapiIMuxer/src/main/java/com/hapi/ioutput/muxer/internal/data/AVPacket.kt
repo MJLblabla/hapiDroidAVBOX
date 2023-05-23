@@ -16,12 +16,11 @@
 package com.hapi.ioutput.muxer.internal.data
 
 import java.nio.ByteBuffer
-import java.sql.Timestamp
 
 /**
  * Frame internal representation.
  */
-data class Frame(
+data class AVPacket(
     /**
      * Contains an audio or video frame data.
      */
@@ -40,7 +39,7 @@ data class Frame(
     /**
      * Decoded timestamp in µs (not used).
      */
-    var dts: Long? = null,
+    var dts: Long,
 
     /**
      * [Boolean.true] if frame is a key frame (I-frame for AVC/HEVC and audio frames)

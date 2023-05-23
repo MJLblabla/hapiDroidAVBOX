@@ -79,7 +79,8 @@ class HapiMediaMuxer : OutputStreamer() {
         trackStreamID: String,
         outputBuffer: ByteBuffer,
         outputFormat: MediaFormat,
-        info: MediaCodec.BufferInfo
+        info: MediaCodec.BufferInfo,
+        dts: Long
     ) {
         if ((mMediaStreams.findByTrackStreamID(trackStreamID)?.mediaMuxerSteamID
                 ?: "").isEmpty() && info.flags == MediaCodec.BUFFER_FLAG_CODEC_CONFIG

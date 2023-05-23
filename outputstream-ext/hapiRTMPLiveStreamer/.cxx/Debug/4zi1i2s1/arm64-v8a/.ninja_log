@@ -46,3 +46,16 @@
 0	432	1679991644	CMakeFiles/rtmpmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnection.cpp.o	42d8c7ef4a6c6e2
 1	453	1679991644	CMakeFiles/rtmpmuxer.dir/rtmpmuxer.cpp.o	17c19d810da2f45b
 453	528	1679991644	/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/hapiRTMPLiveStreamer/build/intermediates/cxx/Debug/4zi1i2s1/obj/arm64-v8a/librtmpmuxer.so	60caa7f03b4f224
+2	614	1684764469	CMakeFiles/rtmpmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnectionJNICaller.cpp.o	15e5fa864812d67b
+2	744	1684764469	CMakeFiles/rtmpmuxer.dir/rtmp/RTMPLiveConnection.cpp.o	4f5c18da9a1c7690
+0	782	1684764469	CMakeFiles/rtmpmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnection.cpp.o	42d8c7ef4a6c6e2
+3	817	1684764469	CMakeFiles/rtmpmuxer.dir/rtmpmuxer.cpp.o	17c19d810da2f45b
+817	965	1684764469	/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/hapiRTMPLiveStreamer/build/intermediates/cxx/Debug/4zi1i2s1/obj/arm64-v8a/librtmpmuxer.so	60caa7f03b4f224
+1	13	0	clean	5430a8c815a28d05
+0	9	0	clean	5430a8c815a28d05
+0	9	0	clean	5430a8c815a28d05
+2	453	1684831825	CMakeFiles/rtmpmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnectionJNICaller.cpp.o	15e5fa864812d67b
+3	550	1684831825	CMakeFiles/rtmpmuxer.dir/rtmp/RTMPLiveConnection.cpp.o	4f5c18da9a1c7690
+2	659	1684831825	CMakeFiles/rtmpmuxer.dir/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/iconnection/IConnection.cpp.o	42d8c7ef4a6c6e2
+5	687	1684831825	CMakeFiles/rtmpmuxer.dir/rtmpmuxer.cpp.o	17c19d810da2f45b
+687	793	1684831825	/Users/manjiale/dev/hapiDroidAVBOX/outputstream-ext/hapiRTMPLiveStreamer/build/intermediates/cxx/Debug/4zi1i2s1/obj/arm64-v8a/librtmpmuxer.so	60caa7f03b4f224

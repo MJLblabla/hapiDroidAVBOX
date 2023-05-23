@@ -2,10 +2,7 @@ package com.hapi.rtmplive
 
 import com.hapi.ioutput.IConnection
 import com.hapi.ioutput.MediaStreamList
-import com.hapi.ioutput.muxer.internal.data.Packet
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 import java.nio.ByteBuffer
 
 class RTMPConnection : IConnection() {
@@ -30,7 +27,7 @@ class RTMPConnection : IConnection() {
         native_open(mNativeContextHandler, url)
     }
 
-    override fun sendPacket(packet: Packet) {
+    override fun sendPacket(packet: FormatPacket) {
         if (mNativeContextHandler == -1L) {
             return
         }

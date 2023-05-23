@@ -2,8 +2,8 @@ package com.hapi.ioutput
 
 import android.media.MediaCodec
 import android.media.MediaFormat
-import com.hapi.ioutput.muxer.internal.data.Frame
-import com.hapi.ioutput.muxer.internal.data.Packet
+import com.hapi.ioutput.muxer.internal.data.AVPacket
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 import com.hapi.ioutput.muxer.internal.muxers.IMuxer
 import com.hapi.ioutput.muxer.internal.muxers.IMuxerListener
 import java.nio.ByteBuffer
@@ -13,7 +13,7 @@ abstract class BaseOutputStreamer : OutputStreamer(), IMuxerListener {
     protected abstract val connection: IConnection
     protected abstract val packetMuxer: IMuxer
 
-    override fun onOutputFrame(packet: Packet) {
+    override fun onOutputFrame(packet: FormatPacket) {
         connection.sendPacket(packet)
     }
 
@@ -69,7 +69,8 @@ abstract class BaseOutputStreamer : OutputStreamer(), IMuxerListener {
         trackStreamID: String,
         outputBuffer: ByteBuffer,
         outputFormat: MediaFormat,
-        info: MediaCodec.BufferInfo
+        info: MediaCodec.BufferInfo,
+        dts: Long
     ) {
         if (!mMediaStreams.isAllPrepared()) {
             return
@@ -81,13 +82,13 @@ abstract class BaseOutputStreamer : OutputStreamer(), IMuxerListener {
         }
         val isKey = info.flags == MediaCodec.BUFFER_FLAG_KEY_FRAME
         packetMuxer.encode(
-            Frame(
+            AVPacket(
                 buffer,
                 outputFormat.getString(MediaFormat.KEY_MIME)!!,
                 info.presentationTimeUs,
                 System.nanoTime() / 1000,
                 //startTime + info.presentationTimeUs, // pts
-                null, // dts
+                dts, // dts
                 isKey,
                 if (mMediaStreams.findByTrackStreamID(trackStreamID)!!.isAudio()) {
                     listOf(

@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 package com.hapi.ioutput.muxer.internal.muxers.flv.packet
+
 import android.media.MediaFormat
-import com.hapi.ioutput.muxer.internal.data.Frame
+import com.hapi.ioutput.muxer.internal.data.AVPacket
 import com.hapi.ioutput.muxer.internal.utils.put
 import com.hapi.ioutput.muxer.internal.utils.putInt24
 import com.hapi.ioutput.muxer.internal.utils.shl
@@ -68,16 +69,18 @@ abstract class FlvTag(
     companion object {
         private const val FLV_HEADER_TAG_SIZE = 11
 
-        fun createFlvTag(frame: Frame, isSequenceHeader: Boolean, config: MediaFormat): FlvTag {
+        fun createFlvTag(frame: AVPacket, isSequenceHeader: Boolean, config: MediaFormat): FlvTag {
             return when {
                 frame.mimeType.isAudio() -> if (isSequenceHeader) {
-                    AudioTag(frame.pts, frame.extra!![0], true, config )
+                    AudioTag(frame.pts, frame.dts, frame.extra!![0], true, config)
                 } else {
-                    AudioTag(frame.pts, frame.buffer, false, config )
+                    AudioTag(frame.pts, frame.dts, frame.buffer, false, config)
                 }
+
                 frame.mimeType.isVideo() -> if (isSequenceHeader) {
                     VideoTag(
                         frame.pts,
+                        frame.dts,
                         frame.extra!!,
                         frame.isKeyFrame,
                         true,
@@ -86,12 +89,14 @@ abstract class FlvTag(
                 } else {
                     VideoTag(
                         frame.pts,
+                        frame.dts,
                         frame.buffer,
                         frame.isKeyFrame,
                         false,
                         config
                     )
                 }
+
                 else -> {
                     throw IOException("Frame is neither video nor audio: ${frame.mimeType}")
                 }

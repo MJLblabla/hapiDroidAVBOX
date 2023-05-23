@@ -16,11 +16,11 @@
 package com.hapi.ioutput.muxer.internal.muxers.flv.packet
 
 import android.media.MediaFormat
-import com.hapi.ioutput.muxer.internal.data.Frame
+import com.hapi.ioutput.muxer.internal.data.AVPacket
 import com.hapi.ioutput.muxer.internal.utils.isAudio
 
 class FlvTagFactory(
-    private val frame: Frame,
+    private val frame: AVPacket,
     private val alsoWriteSequenceHeader: Boolean = true,
     private val config: MediaFormat
 ) {

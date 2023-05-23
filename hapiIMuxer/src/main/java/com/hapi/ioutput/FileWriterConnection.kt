@@ -1,10 +1,8 @@
 package com.hapi.ioutput
 
-import com.hapi.ioutput.muxer.internal.data.Packet
-import java.io.BufferedWriter
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 import java.io.File
 import java.io.FileOutputStream
-import java.io.FileWriter
 
 class FileWriterConnection : IConnection() {
 
@@ -19,7 +17,7 @@ class FileWriterConnection : IConnection() {
         jniConnectedStatusChange(ConnectedStatus.CONNECTED_STATUS_CONNECTED.intStatus)
     }
 
-    override fun sendPacket(packet: Packet) {
+    override fun sendPacket(packet: FormatPacket) {
         bufferWriter?.write(packet.buffer.array())
     }
 

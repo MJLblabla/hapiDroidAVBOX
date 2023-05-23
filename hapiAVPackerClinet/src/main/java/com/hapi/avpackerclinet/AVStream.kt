@@ -87,9 +87,10 @@ abstract class AVStream<T>(open val track: Track<T>) {
         override fun onOutputBufferAvailable(
             outputBuffer: ByteBuffer,
             outputFormat: MediaFormat,
-            info: MediaCodec.BufferInfo
+            info: MediaCodec.BufferInfo,
+            dts: Long
         ) {
-            streamObserver?.writePacket(trackStreamID, outputBuffer, outputFormat, info)
+            streamObserver?.writePacket(trackStreamID, outputBuffer, outputFormat, info,dts)
         }
 
         override fun onEncoderStatusChange(encodeStatus: EncoderStatus) {

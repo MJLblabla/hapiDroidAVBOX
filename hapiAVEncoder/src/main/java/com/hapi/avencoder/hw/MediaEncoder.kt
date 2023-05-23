@@ -72,7 +72,7 @@ abstract class MediaEncoder<T> : IEncoder {
                     encoderCallBack?.onOutputBufferAvailable(
                         codec.getOutputBuffer(index)!!,
                         codec.outputFormat,
-                        info
+                        info, info.presentationTimeUs
                     )
                     codec.releaseOutputBuffer(index, false)
                 }
@@ -222,11 +222,11 @@ class VideoMediaEncoder : MediaEncoder<VideoEncodeFrame>(), IVideoEncoder {
                 )
                 val sizes = ArrayList<Size>()
                 var minRatioDiff = Double.MAX_VALUE
-                for (h in heightRange.lower..heightRange.upper) {
+                for (h in (heightRange.lower) as Int..heightRange.upper) {
                     if (h % hAlignment != 0) {
                         continue
                     }
-                    for (w in widthRange.lower..widthRange.upper) {
+                    for (w in widthRange.lower as Int..widthRange.upper) {
                         if (w % wAlignment != 0) {
                             continue
                         }

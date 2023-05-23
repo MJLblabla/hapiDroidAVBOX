@@ -93,7 +93,7 @@ class ScreenRecordService : Service() {
         // 获取服务通知
         val notification = createForegroundNotification()
         //将服务置于启动状态 ,NOTIFICATION_ID指的是创建的通知的ID
-        startForeground(ID_MEDIA_PROJECTION, notification)
+        startForeground(1, notification)
     }
 
     private fun createForegroundNotification(): Notification {
@@ -105,7 +105,7 @@ class ScreenRecordService : Service() {
             //用户可见的通道名称
             val channelName = "Foreground Service Notification"
             //通道的重要程度
-            val importance = NotificationManager.IMPORTANCE_HIGH
+            val importance = NotificationManager.IMPORTANCE_NONE
             val notificationChannel =
                 NotificationChannel(notificationChannelId, channelName, importance)
             notificationChannel.description = "Channel description"

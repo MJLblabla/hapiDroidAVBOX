@@ -16,7 +16,7 @@
 package com.hapi.ioutput.muxer.internal.muxers.ts
 
 import android.media.MediaFormat
-import com.hapi.ioutput.muxer.internal.data.Frame
+import com.hapi.ioutput.muxer.internal.data.AVPacket
 import com.hapi.ioutput.muxer.internal.muxers.IMuxer
 import com.hapi.ioutput.muxer.internal.muxers.IMuxerListener
 import com.hapi.ioutput.muxer.internal.muxers.ts.data.Service
@@ -78,68 +78,68 @@ class TSMuxer(
     /**
      * Encode a frame to MPEG-TS format.
      * Each audio frames and each video key frames must come with an extra buffer containing sps, pps,...
-     * @param frame frame to mux
+     * @param avPacket frame to mux
      * @param streamPid Pid of frame stream. Throw a NoSuchElementException if streamPid refers to an unknown stream
      */
-    override fun encode(frame: Frame, streamPid: Int) {
+    override fun encode(avPacket: AVPacket, streamPid: Int) {
         val pes = getPes(streamPid.toShort())
-        when (frame.mimeType) {
+        when (avPacket.mimeType) {
             MediaFormat.MIMETYPE_VIDEO_AVC -> {
                 // Copy sps & pps before buffer
-                if (frame.isKeyFrame) {
-                    if (frame.extra == null) {
+                if (avPacket.isKeyFrame) {
+                    if (avPacket.extra == null) {
                         throw MissingFormatArgumentException("Missing extra for AVC")
                     }
                     val buffer =
                         ByteBuffer.allocate(
-                            6 + frame.extra.sumOf { it.limit() } + frame.buffer.limit()
+                            6 + avPacket.extra.sumOf { it.limit() } + avPacket.buffer.limit()
                         )
                     buffer.putInt(0x00000001)
                     buffer.put(0x09.toByte())
                     buffer.put(0xf0.toByte())
-                    frame.extra.forEach { buffer.put(it) }
-                    buffer.put(frame.buffer)
+                    avPacket.extra.forEach { buffer.put(it) }
+                    buffer.put(avPacket.buffer)
                     buffer.rewind()
-                    frame.buffer = buffer
+                    avPacket.buffer = buffer
                 }
             }
             MediaFormat.MIMETYPE_VIDEO_HEVC -> {
                 // Copy sps & pps & vps before buffer
-                if (frame.isKeyFrame) {
-                    if (frame.extra == null) {
+                if (avPacket.isKeyFrame) {
+                    if (avPacket.extra == null) {
                         throw MissingFormatArgumentException("Missing extra for HEVC")
                     }
                     val buffer =
                         ByteBuffer.allocate(
-                            7 + frame.extra.sumOf { it.limit() } + frame.buffer.limit()
+                            7 + avPacket.extra.sumOf { it.limit() } + avPacket.buffer.limit()
                         )
                     buffer.putInt(0x00000001)
                     buffer.put(0x46.toByte())
                     buffer.put(0x01.toByte())
                     buffer.put(0x50.toByte())
-                    frame.extra.forEach { buffer.put(it) }
-                    buffer.put(frame.buffer)
+                    avPacket.extra.forEach { buffer.put(it) }
+                    buffer.put(avPacket.buffer)
                     buffer.rewind()
-                    frame.buffer = buffer
+                    avPacket.buffer = buffer
                 }
             }
             MediaFormat.MIMETYPE_AUDIO_AAC -> {
                 val buffer =
-                    ByteBuffer.allocate(frame.buffer.remaining() + 7) // 7 = ADTS - protectionAbsent
+                    ByteBuffer.allocate(avPacket.buffer.remaining() + 7) // 7 = ADTS - protectionAbsent
                 val adts =
-                    ADTS.fromMediaFormat(pes.stream.config, frame.buffer.remaining())
+                    ADTS.fromMediaFormat(pes.stream.config, avPacket.buffer.remaining())
                 adts.write(buffer)
                 // No need to use extra. It contains decoder-specific information from ESDS.
-                buffer.put(frame.buffer)
+                buffer.put(avPacket.buffer)
                 buffer.rewind()
-                frame.buffer = buffer
+                avPacket.buffer = buffer
             }
             MediaFormat.MIMETYPE_AUDIO_OPUS -> {} // TODO: optional control header
-            else -> throw IllegalArgumentException("Unsupported mimeType ${frame.mimeType}")
+            else -> throw IllegalArgumentException("Unsupported mimeType ${avPacket.mimeType}")
         }
 
         synchronized(this) {
-            generateStreams(frame, pes)
+            generateStreams(avPacket, pes)
         }
     }
 
@@ -148,7 +148,7 @@ class TSMuxer(
      * @param pes Pes containing infos on the stream
      * @param frame frame to mux
      */
-    private fun generateStreams(frame: Frame, pes: Pes) {
+    private fun generateStreams(frame: AVPacket, pes: Pes) {
         retransmitPsi(frame.mimeType.isVideo() and frame.isKeyFrame)
         pes.write(frame)
     }

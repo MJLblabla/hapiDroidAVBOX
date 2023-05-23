@@ -15,8 +15,8 @@
  */
 package com.hapi.ioutput.muxer.internal.muxers
 
-import com.hapi.ioutput.muxer.internal.data.Packet
+import com.hapi.ioutput.muxer.internal.data.FormatPacket
 
 interface IMuxerListener {
-    fun onOutputFrame(packet: Packet)
+    fun onOutputFrame(packet: FormatPacket)
 }
